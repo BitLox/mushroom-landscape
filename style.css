@@ -55,6 +55,23 @@ svg {
     color: #1B1734;
 }
 
+.cls-1 {
+font-family: Mojita, Mojita;
+font-size: 60px;
+}
+
+.title_text {
+    fill: #fff; 
+    stroke:#231f20; 
+    stroke-miterlimit:10; 
+    stroke-width:0.1;
+}
+
+.cls-7 {
+letter-spacing: 0em;
+}
+
+
 /* MARK: ---0-490 Mobile */
 @media (max-width: 490px) {
 
