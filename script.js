@@ -76,7 +76,7 @@ selectors.forEach((selector, index) => {
     shiftedColors.forEach((color, colorIndex) => {
         tl.to(selector, {
             fill: color,
-            duration: 1,
+            duration: 5,
             ease: 'none'
         }, colorIndex + (index * 0.2)); // Stagger by 0.2 seconds per path
     });
