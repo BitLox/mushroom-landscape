@@ -45,6 +45,44 @@ scene1.to("#cloudStart-R", { x: 300 }, 0);
 //animate text
 scene1.to("#info", { y: 8 * speed }, 0);
 
+// // GSAP timeline for color cycling
+// const tl = gsap.timeline({ repeat: -1, yoyo: true });
+
+// // Define color cycle array
+// const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00'];
+
+// // Animate the fill color of the SVG path
+// colors.forEach((color, index) => {
+//     tl.to('#text', {
+//         fill: color,
+//         duration: 1,
+//         ease: 'none'
+//     }, index);
+// });
+
+
+// GSAP timeline for staggered color cycling
+const tl = gsap.timeline({ repeat: -1 });
+
+// Define color cycle array
+const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00', '#ff4500', '#9932cc', '#00ced1', '#ffd700', '#adff2f', '#ff69b4', '#4682b4'];
+
+// Array of selectors for the 13 paths
+const selectors = ['#text1', '#text2top', '#text3', '#text4', '#text5', '#text6', '#text7', '#text8', '#text9', '#text10', '#text11', '#text12', '#text13'];
+
+// Animate each path with staggered color cycles
+selectors.forEach((selector, index) => {
+    const shiftedColors = [...colors.slice(index), ...colors.slice(0, index)]; // Rotate colors for each path
+    shiftedColors.forEach((color, colorIndex) => {
+        tl.to(selector, {
+            fill: color,
+            duration: 1,
+            ease: 'none'
+        }, colorIndex + (index * 0.2)); // Stagger by 0.2 seconds per path
+    });
+});
+
+
 /*   Bird   */
 gsap.fromTo(
     "#bird",
