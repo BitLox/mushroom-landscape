@@ -208,7 +208,8 @@ ScrollTrigger.create({
 
 sun2.to("#sun", { attr: { offset: "1.4" } }, 0);
 sun2.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.7" } }, 0);
-sun2.to("#sun", { attr: { "stop-color": "#ffff00" } }, 0);
+// sun2.to("#sun", { attr: { "stop-color": "#ffff00" } }, 0);
+sun2.to("#sun", { attr: { "stop-color": "#F4F6F0" } }, 0);
 sun2.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#623951" } }, 0);
 sun2.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" } }, 0);
 sun2.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#45224A" } }, 0);
