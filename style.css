@@ -78,7 +78,7 @@ letter-spacing: 0em;
     #text1,#text2top,#text3,#text4,#text5,#text6,#text7,#text8,#text9,#text10,#text11,#text12,#text13,
     #arrow {
         transform-origin: 50% 90%;
-        transform: translateY(-120px) translateX(-5px)  scale(0.8);
+        transform: translateY(-120px) translateX(-7px)  scale(0.8);
     }
 
     #info2 {
