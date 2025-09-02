@@ -62,7 +62,7 @@ scene1.to("#info", { y: 8 * speed }, 0);
 
 
 // GSAP timeline for staggered color cycling
-const tl = gsap.timeline({ repeat: -1 });
+const tl = gsap.timeline({ repeat: -1, yoyo: true });
 
 // Define color cycle array
 const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00', '#ff4500', '#9932cc', '#00ced1', '#ffd700', '#adff2f', '#ff69b4', '#4682b4'];
@@ -76,7 +76,7 @@ selectors.forEach((selector, index) => {
     shiftedColors.forEach((color, colorIndex) => {
         tl.to(selector, {
             fill: color,
-            duration: 5,
+            duration: 1,
             ease: 'none'
         }, colorIndex + (index * 0.2)); // Stagger by 0.2 seconds per path
     });
