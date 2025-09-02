@@ -65,7 +65,7 @@ scene1.to("#info", { y: 8 * speed }, 0);
 const tl = gsap.timeline({ repeat: -1, yoyo: true });
 
 // Define color cycle array
-const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00', '#ff4500', '#9932cc', '#00ced1', '#ffd700', '#adff2f', '#ff69b4', '#4682b4'];
+const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ff4500', '#9932cc', '#00ced1', '#ff69b4', '#4682b4'];
 
 // Array of selectors for the 13 paths
 const selectors = ['#text1', '#text2top', '#text3', '#text4', '#text5', '#text6', '#text7', '#text8', '#text9', '#text10', '#text11', '#text12', '#text13'];
