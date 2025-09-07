@@ -161,6 +161,7 @@ scene2.fromTo("#h2-4", { y: 700 }, { y: 0 }, 0.2);
 scene2.fromTo("#h2-5", { y: 800 }, { y: 0 }, 0.3);
 scene2.fromTo("#h2-6", { y: 900 }, { y: 0 }, 0.3);
 
+
 /* Bats */
 gsap.set("#bats", { transformOrigin: "50% 50%" });
 gsap.fromTo(
@@ -213,6 +214,7 @@ sun2.to("#sun", { attr: { "stop-color": "#F4F6F0" } }, 0);
 sun2.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#623951" } }, 0);
 sun2.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" } }, 0);
 sun2.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#45224A" } }, 0);
+sun2.fromTo("#testing2", { opacity: 0 }, { opacity: 1, y: -100 }, 0.15);
 
 /* Transition (from Scene2 to Scene3) */
 gsap.set("#scene3", { y: height - 40, visibility: "visible" });
