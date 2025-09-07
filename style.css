@@ -71,13 +71,20 @@ font-size: 60px;
 letter-spacing: 0em;
 }
 
+.asimovian-regular {
+  font-family: "Asimovian", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 .snazzy-svg-text {
-  font-family: 'roboto','Comic Sans','Poppins', sans-serif;
+  font-family: "Asimovian", sans-serif;
   font-size: 24px;
   fill: #F4F6F0; /* White text */
 }
 .snazzy-svg-text2 {
-  font-family: 'roboto','Comic Sans','Poppins', sans-serif;
+  font-family: "Asimovian", sans-serif;
   font-size: 24px;
   fill: #231f20; /* White text */
 }
