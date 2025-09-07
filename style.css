@@ -72,12 +72,12 @@ letter-spacing: 0em;
 }
 
 .snazzy-svg-text {
-  font-family: 'Courier New', monospace,'Comic Sans','Poppins', sans-serif;
+  font-family: 'roboto','Comic Sans','Poppins', sans-serif;
   font-size: 24px;
   fill: #F4F6F0; /* White text */
 }
 .snazzy-svg-text2 {
-  font-family: 'Courier New', monospace,'Comic Sans','Poppins', sans-serif;
+  font-family: 'roboto','Comic Sans','Poppins', sans-serif;
   font-size: 24px;
   fill: #231f20; /* White text */
 }

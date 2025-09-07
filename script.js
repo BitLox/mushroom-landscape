@@ -163,39 +163,39 @@ scene2.fromTo("#h2-6", { y: 900 }, { y: 0 }, 0.3);
 
 
 /* Bats */
-gsap.set("#bats", { transformOrigin: "50% 50%" });
-gsap.fromTo(
-    "#bats",
-    { opacity: 1, y: 400, scale: 0 },
-    {
-        y: 20,
-        scale: 0.8,
-        //transformOrigin: "50% 50%",
-        ease: "power3.out",
-        scrollTrigger: {
-            trigger: ".scrollElement",
-            start: "40% top",
-            end: "70% 100%",
-            scrub: 3,
-            onEnter: function () {
-                gsap.utils.toArray("#bats path").forEach((item, i) => {
-                    gsap.to(item, {
-                        scaleX: 0.5,
-                        yoyo: true,
-                        repeat: 9,
-                        transformOrigin: "50% 50%",
-                        duration: 0.15,
-                        delay: 0.7 + i / 10
-                    });
-                });
-                gsap.set("#bats", { opacity: 1 });
-            },
-            onLeave: function () {
-                //gsap.to("#bats", { opacity: 0, delay: 2 });
-            }
-        }
-    }
-);
+// gsap.set("#bats", { transformOrigin: "50% 50%" });
+// gsap.fromTo(
+//     "#bats",
+//     { opacity: 1, y: 400, scale: 0 },
+//     {
+//         y: 20,
+//         scale: 0.8,
+//         //transformOrigin: "50% 50%",
+//         ease: "power3.out",
+//         scrollTrigger: {
+//             trigger: ".scrollElement",
+//             start: "40% top",
+//             end: "70% 100%",
+//             scrub: 3,
+//             onEnter: function () {
+//                 gsap.utils.toArray("#bats path").forEach((item, i) => {
+//                     gsap.to(item, {
+//                         scaleX: 0.5,
+//                         yoyo: true,
+//                         repeat: 9,
+//                         transformOrigin: "50% 50%",
+//                         duration: 0.15,
+//                         delay: 0.7 + i / 10
+//                     });
+//                 });
+//                 gsap.set("#bats", { opacity: 1 });
+//             },
+//             onLeave: function () {
+//                 //gsap.to("#bats", { opacity: 0, delay: 2 });
+//             }
+//         }
+//     }
+// );
 
 /* Sun increase */
 let sun2 = gsap.timeline();
