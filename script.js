@@ -250,9 +250,10 @@ scene3.fromTo("#h3-5", { y: 1000 }, { y: -550 }, 0.12);
 scene3.fromTo("#stars", { opacity: 0 }, { opacity: 0.5, y: -500 }, 0);
 
 // Scroll Back text
-scene3.fromTo("#arrow2", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
-scene3.fromTo("#text2", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.3);
-scene3.to("footer", { opacity: 1 }, 0.3);
+scene3.fromTo("#testing", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
+// scene3.fromTo("#arrow2", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
+// scene3.fromTo("#text2", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.3);
+// scene3.to("footer", { opacity: 1 }, 0.3);
 
 //gradient value change
 scene3.to("#bg2-grad", { attr: { cy: 600 } }, 0);
@@ -275,6 +276,7 @@ ScrollTrigger.create({
     }
 });
 fstarTL.to("#fstar", { x: -700, y: -250, ease: "power2.out" }, 0);
+
 
 gsap.fromTo("#stars path:nth-of-type(1)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 0.8 });
 gsap.fromTo("#stars path:nth-of-type(3)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 1.8 });

@@ -71,6 +71,11 @@ font-size: 60px;
 letter-spacing: 0em;
 }
 
+.snazzy-svg-text {
+  font-family: 'Poppins', sans-serif;
+  font-size: 24px;
+  fill: #ffffff; /* White text */
+}
 
 /* MARK: ---0-490 Mobile */
 @media (max-width: 490px) {
