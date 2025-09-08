@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "Mojita";
+  src: url('Mojita.ttf') format('truetype');
+}
+
+
 body {
     margin: 0;
     padding: 0;
@@ -79,12 +85,12 @@ letter-spacing: 0em;
 
 
 .snazzy-svg-text {
-  font-family: "Asimovian", sans-serif;
+  font-family: "Mojita","Asimovian", sans-serif;
   font-size: 24px;
   fill: #F4F6F0; /* White text */
 }
 .snazzy-svg-text2 {
-  font-family: "Asimovian", sans-serif;
+  font-family: "Mojita","Asimovian", sans-serif;
   font-size: 24px;
   fill: #231f20; /* White text */
 }
