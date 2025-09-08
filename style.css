@@ -117,7 +117,7 @@ letter-spacing: 0em;
 
     .snazzy-svg-text3 {
     font-family: "Mojita","Asimovian", sans-serif;
-    font-size: 12px;
+    /* font-size: 12px; */
     fill: #F4F6F0; /* White text */
     }
 
