@@ -115,11 +115,11 @@ letter-spacing: 0em;
         transform: translateY(-120px) scale(0.8);
     }
 
-    .snazzy-svg-text3 {
+    /* .snazzy-svg-text3 {
     font-family: "Mojita","Asimovian", sans-serif;
-    /* font-size: 12px; */
-    fill: #F4F6F0; /* White text */
-    }
+    font-size: 12px;
+    fill: #F4F6F0; 
+    } */
 
     
 }
