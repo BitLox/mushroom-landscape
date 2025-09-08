@@ -252,7 +252,7 @@ scene3.fromTo("#h3-5", { y: 1000 }, { y: -550 }, 0.12);
 scene3.fromTo("#stars", { opacity: 0 }, { opacity: 0.5, y: -500 }, 0);
 
 // Scroll Back text
-scene3.fromTo("#testing", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
+scene3.fromTo("#scene3_text", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
 // scene3.fromTo("#arrow2", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
 // scene3.fromTo("#text2", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.3);
 // scene3.to("footer", { opacity: 1 }, 0.3);

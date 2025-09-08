@@ -84,15 +84,21 @@ letter-spacing: 0em;
 }
 
 
-.snazzy-svg-text {
+.snazzy-svg-text1 {
   font-family: "Mojita","Asimovian", sans-serif;
-  font-size: 24px;
-  fill: #F4F6F0; /* White text */
+  font-size: 14px;
+  fill: #231f20; /* White text */
 }
 .snazzy-svg-text2 {
   font-family: "Mojita","Asimovian", sans-serif;
-  font-size: 24px;
+  font-size: 14px;
   fill: #231f20; /* White text */
+}
+
+.snazzy-svg-text3 {
+  font-family: "Mojita","Asimovian", sans-serif;
+  font-size: 24px;
+  fill: #F4F6F0; /* White text */
 }
 
 /* MARK: ---0-490 Mobile */
@@ -108,4 +114,12 @@ letter-spacing: 0em;
         transform-origin: 50% 50%;
         transform: translateY(-120px) scale(0.8);
     }
+
+    .snazzy-svg-text3 {
+    font-family: "Mojita","Asimovian", sans-serif;
+    font-size: 12px;
+    fill: #F4F6F0; /* White text */
+    }
+
+    
 }
