@@ -110,10 +110,10 @@ letter-spacing: 0em;
         transform: translateY(-120px) translateX(-7px)  scale(0.8);
     }
 
-    #info2 {
+    /* #info2 {
         transform-origin: 50% 50%;
         transform: translateY(-120px) scale(0.8);
-    }
+    } */
 
     /* .snazzy-svg-text3 {
     font-family: "Mojita","Asimovian", sans-serif;
