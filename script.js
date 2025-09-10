@@ -68,7 +68,7 @@ const tl = gsap.timeline({ repeat: -1, yoyo: true });
 const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ff4500', '#9932cc', '#00ced1', '#ff69b4', '#4682b4'];
 
 // Array of selectors for the 13 paths
-const selectors = ['#text1', '#text2top', '#text3', '#text4', '#text5', '#text6', '#text7', '#text8', '#text9', '#text10', '#text11', '#text12', '#text13'];
+const selectors = ['#text1', '#text2top', '#text3', '#text4', '#text5', '#text6', '#text7', '#text8', '#text9', '#text10', '#text11', '#text12', '#text13', '#x-logo', '#Path-3'];
 
 // Animate each path with staggered color cycles
 selectors.forEach((selector, index) => {
@@ -258,7 +258,7 @@ scene3.fromTo("#scene3_text", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
 // scene3.to("footer", { opacity: 1 }, 0.3);
 
 scene3.fromTo("#x-logo", { opacity: 0 }, { opacity: 0.7, y: -200, x: 100, scale: 0.5 }, 0.25);
-scene3.fromTo("#t-logo", { opacity: 0, x: 900 }, { opacity: 0.7, y: -200, x: 550, scale: 0.6 }, 0.25);
+scene3.fromTo("#t-logo", { opacity: 0, x: 900 }, { opacity: 0.7, y: -235, x: 550, scale: 0.9 }, 0.25);
 
 
 //gradient value change
