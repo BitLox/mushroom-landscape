@@ -9,8 +9,6 @@ let height = document.querySelector("svg").getBBox().height;
 
 gsap.set("#h2-1", { opacity: 0 });
 gsap.set("#bg_grad", { attr: { cy: "-50" } });
-// gsap.set(["#dinoL", "#dinoR"], { y: 80 });
-// gsap.set("#dinoL", { x: -10 });
 
 const mm = gsap.matchMedia();
 mm.add("(max-width: 1922px)", () => {
@@ -257,8 +255,34 @@ scene3.fromTo("#scene3_text", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
 // scene3.fromTo("#text2", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.3);
 // scene3.to("footer", { opacity: 1 }, 0.3);
 
-scene3.fromTo("#x-logo", { opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 100, scale: 0.5 }, 0.15);
-scene3.fromTo("#t-logo", { opacity: 0, x: 900, scale: 0 }, { opacity: 0.7, y: -210, x: 550, scale: 0.65 }, 0.15);
+
+let mmedia = gsap.matchMedia();
+
+mmedia.add("(min-width: 768px)", () => { // For tablets and larger screens
+  scene3.fromTo("#x-logo", {opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 280, scale: 0.5 }, 0.15);
+  scene3.fromTo("#t-logo", { opacity: 0, x: 1000, scale: 0 }, { opacity: 0.7, y: -210, x: 390, scale: 0.65 }, 0.15);
+
+  // Add other tablet-specific animations
+  return () => {
+    // Revert tablet-specific animations
+  };
+});
+
+mmedia.add("(max-width: 767px)", () => { // For mobile screens
+  scene3.fromTo("#x-logo", {opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 280, scale: 0.5 }, 0.15);
+  scene3.fromTo("#t-logo", { opacity: 0, x: 1000, scale: 0 }, { opacity: 0.7, y: -210, x: 390, scale: 0.65 }, 0.15);
+
+  // Add other mobile-specific animations
+  return () => {
+    // Revert mobile-specific animations
+  };
+});
+
+
+
+
+
+// scene3.fromTo("#x-logo", { opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 100, scale: 0.5 }, 0.15);
 
 
 //gradient value change
@@ -283,7 +307,6 @@ ScrollTrigger.create({
 });
 fstarTL.to("#fstar", { x: -700, y: -250, ease: "power2.out" }, 0);
 
-// gsap.set("#x-logo", { y: 300, x: 300, scale: 0.5 });
 
 gsap.fromTo("#stars path:nth-of-type(1)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 0.8 });
 gsap.fromTo("#stars path:nth-of-type(3)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 1.8 });
