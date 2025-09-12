@@ -1,312 +1,35 @@
-//More info about this project and the newer optimized version: https://isladjan.com/work/4/
-//Author: isladjan - https://isladjan.com/
-
 gsap.registerPlugin(ScrollTrigger);
 
+// Initialize variables and settings
 let speed = 100;
 let height = document.querySelector("svg").getBBox().height;
-//let svgCord = screenToSVG(document.querySelector("svg"), window.innerWidth / 2, window.innerHeight / 2);
-
 gsap.set("#h2-1", { opacity: 0 });
 gsap.set("#bg_grad", { attr: { cy: "-50" } });
+gsap.set("#scene3", { y: height - 40, visibility: "visible" });
+gsap.set("#fstar", { y: -400 });
+gsap.set("#bird", { opacity: 0, x: -800 }); // Hide bird initially
 
 const mm = gsap.matchMedia();
 mm.add("(max-width: 1922px)", () => {
-    gsap.set(["#cloudStart-L", "#cloudStart-R"], { x: 10, opacity: 1 });
+  gsap.set(["#cloudStart-L", "#cloudStart-R"], { x: 10, opacity: 1 });
 });
 
-/*  SCENE 1 */
-let scene1 = gsap.timeline();
-ScrollTrigger.create({
-    animation: scene1,
-    trigger: ".scrollElement",
-    start: "top top",
-    end: "45% 100%",
-    scrub: 3
-});
-
-// hills animation
-scene1.to("#h1-1", { y: 3 * speed, x: 1 * speed, scale: 0.9, ease: "power1.in" }, 0);
-scene1.to("#h1-2", { y: 2.6 * speed, x: -0.6 * speed, ease: "power1.in" }, 0);
-scene1.to("#h1-3", { y: 1.7 * speed, x: 1.2 * speed }, 0.03);
-scene1.to("#h1-4", { y: 3 * speed, x: 1 * speed }, 0.03);
-scene1.to("#h1-5", { y: 2 * speed, x: 1 * speed }, 0.03);
-scene1.to("#h1-6", { y: 2.3 * speed, x: -2.5 * speed }, 0);
-scene1.to("#h1-7", { y: 5 * speed, x: 1.6 * speed }, 0);
-scene1.to("#h1-8", { y: 3.5 * speed, x: 0.2 * speed }, 0);
-scene1.to("#h1-9", { y: 3.5 * speed, x: -0.2 * speed }, 0);
-scene1.to("#cloudsBig-L", { y: 4.5 * speed, x: -0.2 * speed }, 0);
-scene1.to("#cloudsBig-R", { y: 4.5 * speed, x: -0.2 * speed }, 0);
-scene1.to("#cloudStart-L", { x: -300 }, 0);
-scene1.to("#cloudStart-R", { x: 300 }, 0);
-
-//animate text
-scene1.to("#info", { y: 8 * speed }, 0);
-
-// GSAP timeline for staggered color cycling
+// Color-cycling timeline (unchanged, non-scroll-based)
 const tl = gsap.timeline({ repeat: -1, yoyo: true });
-
-// Define color cycle array
 const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ff4500', '#9932cc', '#00ced1', '#ff69b4', '#4682b4'];
-
-// Array of selectors for the 13 paths
 const selectors = ['#text1', '#text2top', '#text3', '#text4', '#text5', '#text6', '#text7', '#text8', '#text9', '#text10', '#text11', '#text12', '#text13'];
-
-// Animate each path with staggered color cycles
 selectors.forEach((selector, index) => {
-    const shiftedColors = [...colors.slice(index), ...colors.slice(0, index)]; // Rotate colors for each path
-    shiftedColors.forEach((color, colorIndex) => {
-        tl.to(selector, {
-            fill: color,
-            duration: 1,
-            ease: 'none'
-        }, colorIndex + (index * 0.2)); // Stagger by 0.2 seconds per path
-    });
+  const shiftedColors = [...colors.slice(index), ...colors.slice(0, index)];
+  shiftedColors.forEach((color, colorIndex) => {
+    tl.to(selector, {
+      fill: color,
+      duration: 1,
+      ease: 'none'
+    }, colorIndex + (index * 0.2));
+  });
 });
 
-
-/*   Bird   */
-gsap.fromTo(
-    "#bird",
-    { opacity: 1 },
-    {
-        y: -250,
-        x: 800,
-        ease: "power2.out",
-        scrollTrigger: {
-            trigger: ".scrollElement",
-            start: "15% top",
-            end: "60% 100%",
-            scrub: 4,
-            onEnter: function () {
-                gsap.to("#bird", { scaleX: 1, rotation: 0 });
-            },
-            onLeave: function () {
-                gsap.to("#bird", { scaleX: -1, rotation: -15 });
-            }
-        }
-    }
-);
-
-/* Clouds  */
-let clouds = gsap.timeline();
-ScrollTrigger.create({
-    animation: clouds,
-    trigger: ".scrollElement",
-    start: "top top",
-    end: "70% 100%",
-    scrub: 1
-});
-
-clouds.to("#cloud1", { x: 500 }, 0);
-clouds.to("#cloud2", { x: 1000 }, 0);
-clouds.to("#cloud3", { x: -1000 }, 0);
-clouds.to("#cloud4", { x: -700, y: 25 }, 0);
-
-/* Sun motion Animation  */
-let sun = gsap.timeline();
-ScrollTrigger.create({
-    animation: sun,
-    trigger: ".scrollElement",
-    start: "1% top",
-    end: "1500 top",
-    // end: "2150 100%",
-    scrub: 1,
-    // markers: true,
-    //preventOverlaps: true, //if true, it will affect all preceding ScrollTriggers (you can use for example 'scrollTrigger1')
-    //fastScrollEnd: true,   //(default 2500px/s)
-});
-
-//sun motion
-sun.fromTo("#bg_grad", { attr: { cy: "-50" } }, { attr: { cy: "330" } }, 0);
-//bg change
-//sun.to("#sun", { attr: { offset: "0.15" } }, 0);
-sun.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.15" } }, 0);
-sun.to("#bg_grad stop:nth-child(3)", { attr: { offset: "0.18" } }, 0);
-sun.to("#bg_grad stop:nth-child(4)", { attr: { offset: "0.25" } }, 0);
-sun.to("#bg_grad stop:nth-child(5)", { attr: { offset: "0.46" } }, 0);
-sun.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#FF9171" } }, 0);
-sun.fromTo("#scene2_text", { opacity: 0, y: 1210 }, { opacity: 1, y: -210 }, 0.15);
-
-
-/*   SCENE 2  */
-let scene2 = gsap.timeline();
-ScrollTrigger.create({
-    animation: scene2,
-    trigger: ".scrollElement",
-    start: "15% top",
-    end: "40% 100%",
-    scrub: 1
-});
-
-scene2.fromTo("#h2-1", { y: 500, opacity: 0 }, { y: 0, opacity: 1 }, 0);
-scene2.fromTo("#h2-2", { y: 500 }, { y: 0 }, 0.1);
-scene2.fromTo("#h2-3", { y: 700 }, { y: 0 }, 0.1);
-scene2.fromTo("#h2-4", { y: 700 }, { y: 0 }, 0.2);
-scene2.fromTo("#h2-5", { y: 800 }, { y: 0 }, 0.3);
-scene2.fromTo("#h2-6", { y: 900 }, { y: 0 }, 0.3);
-
-// scene2.fromTo("#scene2_text", { opacity: 1 }, { opacity: 0, y: -2010 }, 0.25);
-
-
-/* Bats */
-// gsap.set("#bats", { transformOrigin: "50% 50%" });
-// gsap.fromTo(
-//     "#bats",
-//     { opacity: 1, y: 400, scale: 0 },
-//     {
-//         y: 20,
-//         scale: 0.8,
-//         //transformOrigin: "50% 50%",
-//         ease: "power3.out",
-//         scrollTrigger: {
-//             trigger: ".scrollElement",
-//             start: "40% top",
-//             end: "70% 100%",
-//             scrub: 3,
-//             onEnter: function () {
-//                 gsap.utils.toArray("#bats path").forEach((item, i) => {
-//                     gsap.to(item, {
-//                         scaleX: 0.5,
-//                         yoyo: true,
-//                         repeat: 9,
-//                         transformOrigin: "50% 50%",
-//                         duration: 0.15,
-//                         delay: 0.7 + i / 10
-//                     });
-//                 });
-//                 gsap.set("#bats", { opacity: 1 });
-//             },
-//             onLeave: function () {
-//                 //gsap.to("#bats", { opacity: 0, delay: 2 });
-//             }
-//         }
-//     }
-// );
-
-
-
-/* Sun increase */
-let sun2 = gsap.timeline();
-ScrollTrigger.create({
-    animation: sun2,
-    trigger: ".scrollElement",
-    start: "2000 top",
-    end: "5000 100%",
-    scrub: 1,
-    // markers: true
-});
-sun2.to("#scene2_text", { opacity: 0, x: -800 }, 0.1);
-// sun2.to("#scene2_text_b", { opacity: 0, x: 500 }, 0.25);
-// sun2.to("#scene2_text_c", { opacity: 0, x: -500 }, 0.25);
-
-// Let's insert the mushroom icon here
-
-
-sun2.to("#sun", { attr: { offset: "1.4" } }, 0);
-sun2.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.7" } }, 0);
-// sun2.to("#sun", { attr: { "stop-color": "#ffff00" } }, 0);
-sun2.to("#sun", { attr: { "stop-color": "#F4F6F0" } }, 0);
-sun2.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#623951" } }, 0);
-sun2.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" } }, 0);
-sun2.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#45224A" } }, 0);
-sun2.fromTo("#testing2", { opacity: 0 }, { opacity: 1, y: -100 }, 0.15);
-
-/* Transition (from Scene2 to Scene3) */
-gsap.set("#scene3", { y: height - 40, visibility: "visible" });
-let sceneTransition = gsap.timeline();
-ScrollTrigger.create({
-    animation: sceneTransition,
-    trigger: ".scrollElement",
-    start: "60% top",
-    end: "bottom 100%",
-    scrub: 1,
-    // markers: true
-});
-
-sceneTransition.to("#h2-1", { y: -height - 100, scale: 1.5, transformOrigin: "50% 50%" }, 0);
-sceneTransition.to("#bg_grad", { attr: { cy: "-80" } }, 0.0);
-sceneTransition.to("#bg2", { y: 0 }, 0);
-
-/* Scene 3 */
-let scene3 = gsap.timeline();
-ScrollTrigger.create({
-    animation: scene3,
-    trigger: ".scrollElement",
-    start: "70% 50%",
-    end: "bottom 100%",
-    scrub: 3
-});
-
-//Hills motion
-scene3.fromTo("#h3-1", { y: 300 }, { y: -550 }, 0);
-scene3.fromTo("#h3-2", { y: 800 }, { y: -550 }, 0.03);
-scene3.fromTo("#h3-3", { y: 600 }, { y: -550 }, 0.06);
-scene3.fromTo("#h3-4", { y: 800 }, { y: -550 }, 0.09);
-scene3.fromTo("#h3-5", { y: 1000 }, { y: -550 }, 0.12);
-
-//stars
-scene3.fromTo("#stars", { opacity: 0 }, { opacity: 0.5, y: -500 }, 0);
-
-// Scroll Back text
-scene3.fromTo("#scene3_text", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
-// scene3.fromTo("#arrow2", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.25);
-// scene3.fromTo("#text2", { opacity: 0 }, { opacity: 0.7, y: -710 }, 0.3);
-// scene3.to("footer", { opacity: 1 }, 0.3);
-
-
-let mmedia = gsap.matchMedia();
-
-mmedia.add("(min-width: 768px)", () => { // For tablets and larger screens
-  scene3.fromTo("#x-logo", {opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 280, scale: 0.5 }, 0.15);
-  scene3.fromTo("#t-logo", { opacity: 0, x: 1000, scale: 0 }, { opacity: 0.7, y: -210, x: 390, scale: 0.65 }, 0.15);
-
-  // Add other tablet-specific animations
-  return () => {
-    // Revert tablet-specific animations
-  };
-});
-
-mmedia.add("(max-width: 767px)", () => { // For mobile screens
-  scene3.fromTo("#x-logo", {opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 280, scale: 0.5 }, 0.15);
-  scene3.fromTo("#t-logo", { opacity: 0, x: 1000, scale: 0 }, { opacity: 0.7, y: -210, x: 390, scale: 0.65 }, 0.15);
-
-  // Add other mobile-specific animations
-  return () => {
-    // Revert mobile-specific animations
-  };
-});
-
-
-
-
-
-// scene3.fromTo("#x-logo", { opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 100, scale: 0.5 }, 0.15);
-
-
-//gradient value change
-scene3.to("#bg2-grad", { attr: { cy: 600 } }, 0);
-scene3.to("#bg2-grad", { attr: { r: 500 } }, 0);
-
-/*   falling star   */
-gsap.set("#fstar", { y: -400 });
-let fstarTL = gsap.timeline();
-ScrollTrigger.create({
-    animation: fstarTL,
-    trigger: ".scrollElement",
-    start: "4200 top",
-    end: "6000 bottom",
-    scrub: 2,
-    onEnter: function () {
-        gsap.set("#fstar", { opacity: 1 });
-    },
-    onLeave: function () {
-        gsap.set("#fstar", { opacity: 0 });
-    }
-});
-fstarTL.to("#fstar", { x: -700, y: -250, ease: "power2.out" }, 0);
-
-
+// Twinkling stars (unchanged, non-scroll-based)
 gsap.fromTo("#stars path:nth-of-type(1)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 0.8 });
 gsap.fromTo("#stars path:nth-of-type(3)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 1.8 });
 gsap.fromTo("#stars path:nth-of-type(5)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 1 });
@@ -323,15 +46,130 @@ gsap.fromTo("#stars path:nth-of-type(40)", { opacity: 0.3 }, { opacity: 1, durat
 gsap.fromTo("#stars path:nth-of-type(45)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 1.8 });
 gsap.fromTo("#stars path:nth-of-type(48)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 1 });
 
-//reset scrollbar position after refresh
-window.onbeforeunload = function () {
-    window.scrollTo(0, 0);
-};
+// Main scroll-based timeline
+let mainTimeline = gsap.timeline();
+ScrollTrigger.create({
+  animation: mainTimeline,
+  trigger: ".scrollElement",
+  start: "top top",
+  end: "6000 bottom",
+  scrub: 1,
+  markers: true
+});
 
-// function screenToSVG(svg, x, y) {
-//     var pt = svg.createSVGPoint();
-//     pt.x = x;
-//     pt.y = y;
-//     var cursorPt = pt.matrixTransform(svg.getScreenCTM().inverse());
-//     return { x: Math.floor(cursorPt.x), y: Math.floor(cursorPt.y) }
-// }
+// Scene 1 (starts at "top top" ≈ 0 seconds)
+mainTimeline.add("scene1", 0);
+mainTimeline.to("#h1-1", { y: 3 * speed, x: 1 * speed, scale: 0.9, ease: "power1.in", duration: 1 }, "scene1");
+mainTimeline.to("#h1-2", { y: 2.6 * speed, x: -0.6 * speed, ease: "power1.in", duration: 1 }, "scene1");
+mainTimeline.to("#h1-3", { y: 1.7 * speed, x: 1.2 * speed, duration: 1 }, "scene1+=0.03");
+mainTimeline.to("#h1-4", { y: 3 * speed, x: 1 * speed, duration: 1 }, "scene1+=0.03");
+mainTimeline.to("#h1-5", { y: 2 * speed, x: 1 * speed, duration: 1 }, "scene1+=0.03");
+mainTimeline.to("#h1-6", { y: 2.3 * speed, x: -2.5 * speed, duration: 1 }, "scene1");
+mainTimeline.to("#h1-7", { y: 5 * speed, x: 1.6 * speed, duration: 1 }, "scene1");
+mainTimeline.to("#h1-8", { y: 3.5 * speed, x: 0.2 * speed, duration: 1 }, "scene1");
+mainTimeline.to("#h1-9", { y: 3.5 * speed, x: -0.2 * speed, duration: 1 }, "scene1");
+mainTimeline.to("#cloudsBig-L", { y: 4.5 * speed, x: -0.2 * speed, duration: 1 }, "scene1");
+mainTimeline.to("#cloudsBig-R", { y: 4.5 * speed, x: -0.2 * speed, duration: 1 }, "scene1");
+mainTimeline.to("#cloudStart-L", { x: -300, duration: 1 }, "scene1");
+mainTimeline.to("#cloudStart-R", { x: 300, duration: 1 }, "scene1");
+mainTimeline.to("#info", { y: 8 * speed, duration: 1 }, "scene1");
+
+// Clouds (starts at "top top" ≈ 0 seconds)
+mainTimeline.to("#cloud1", { x: 500, duration: 1 }, "scene1");
+mainTimeline.to("#cloud2", { x: 1000, duration: 1 }, "scene1");
+mainTimeline.to("#cloud3", { x: -1000, duration: 1 }, "scene1");
+mainTimeline.to("#cloud4", { x: -700, y: 25, duration: 1 }, "scene1");
+
+// Sun motion and background (starts at "1% top" ≈ 0.06 seconds)
+mainTimeline.add("sunStart", 0.06);
+mainTimeline.fromTo("#bg_grad", { attr: { cy: "-50" } }, { attr: { cy: "330" }, duration: 1 }, "sunStart");
+mainTimeline.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.15" }, duration: 1 }, "sunStart");
+mainTimeline.to("#bg_grad stop:nth-child(3)", { attr: { offset: "0.18" }, duration: 1 }, "sunStart");
+mainTimeline.to("#bg_grad stop:nth-child(4)", { attr: { offset: "0.25" }, duration: 1 }, "sunStart");
+mainTimeline.to("#bg_grad stop:nth-child(5)", { attr: { offset: "0.46" }, duration: 1 }, "sunStart");
+mainTimeline.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#FF9171" }, duration: 1 }, "sunStart");
+mainTimeline.fromTo("#scene2_text", { opacity: 0, y: 1210 }, { opacity: 1, y: -210, duration: 1 }, "sunStart+=0.15");
+
+// Scene 2 (starts at "15% top" ≈ 0.9 seconds)
+mainTimeline.add("scene2", 0.9);
+mainTimeline.fromTo("#h2-1", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "scene2");
+mainTimeline.fromTo("#h2-2", { y: 500 }, { y: 0, duration: 1 }, "scene2+=0.1");
+mainTimeline.fromTo("#h2-3", { y: 700 }, { y: 0, duration: 1 }, "scene2+=0.1");
+mainTimeline.fromTo("#h2-4", { y: 700 }, { y: 0, duration: 1 }, "scene2+=0.2");
+mainTimeline.fromTo("#h2-5", { y: 800 }, { y: 0, duration: 1 }, "scene2+=0.3");
+mainTimeline.fromTo("#h2-6", { y: 900 }, { y: 0, duration: 1 }, "scene2+=0.3");
+
+// Sun increase (starts at "2000 top" ≈ 2 seconds)
+mainTimeline.add("sunIncrease", 2);
+mainTimeline.to("#scene2_text", { opacity: 0, x: -800, duration: 1 }, "sunIncrease+=0.1");
+mainTimeline.to("#sun", { attr: { offset: "1.4" }, duration: 1 }, "sunIncrease");
+mainTimeline.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.7" }, duration: 1 }, "sunIncrease");
+mainTimeline.to("#sun", { attr: { "stop-color": "#F4F6F0" }, duration: 1 }, "sunIncrease");
+mainTimeline.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#623951" }, duration: 1 }, "sunIncrease");
+mainTimeline.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" }, duration: 1 }, "sunIncrease");
+mainTimeline.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#45224A" }, duration: 1 }, "sunIncrease");
+mainTimeline.fromTo("#testing2", { opacity: 0 }, { opacity: 1, y: -100, duration: 1 }, "sunIncrease+=0.15");
+
+// Transition (Scene 2 to Scene 3, starts at "60% top" ≈ 3.6 seconds)
+mainTimeline.add("sceneTransition", 4);
+mainTimeline.to("#h2-1", { y: -height - 100, scale: 1.5, transformOrigin: "50% 50%", duration: 1 }, "sceneTransition");
+mainTimeline.to("#bg_grad", { attr: { cy: "-80" }, duration: 1 }, "sceneTransition");
+mainTimeline.to("#bg2", { y: 0, duration: 1 }, "sceneTransition");
+
+// Scene 3 (starts at "70% 50%" ≈ 4.2 seconds)
+mainTimeline.add("scene3", 4.2);
+mainTimeline.fromTo("#h3-1", { y: 300 }, { y: -550, duration: 1 }, "scene3");
+mainTimeline.fromTo("#h3-2", { y: 800 }, { y: -550, duration: 1 }, "scene3+=0.03");
+mainTimeline.fromTo("#h3-3", { y: 600 }, { y: -550, duration: 1 }, "scene3+=0.06");
+mainTimeline.fromTo("#h3-4", { y: 800 }, { y: -550, duration: 1 }, "scene3+=0.09");
+mainTimeline.fromTo("#h3-5", { y: 1000 }, { y: -550, duration: 1 }, "scene3+=0.12");
+mainTimeline.fromTo("#stars", { opacity: 0 }, { opacity: 0.5, y: -500, duration: 1 }, "scene3");
+mainTimeline.fromTo("#scene3_text", { opacity: 0 }, { opacity: 0.7, y: -710, duration: 1 }, "scene3+=0.25");
+mainTimeline.to("#bg2-grad", { attr: { cy: 600 }, duration: 1 }, "scene3");
+mainTimeline.to("#bg2-grad", { attr: { r: 500 }, duration: 1 }, "scene3");
+
+// Handle #x-logo and #t-logo with matchMedia
+const mmedia = gsap.matchMedia();
+mmedia.add("(min-width: 768px)", () => {
+  mainTimeline.fromTo("#x-logo", { opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 280, scale: 0.5, duration: 1 }, "scene3+=0.15");
+  mainTimeline.fromTo("#t-logo", { opacity: 0, x: 1000, scale: 0 }, { opacity: 0.7, y: -210, x: 390, scale: 0.65, duration: 1 }, "scene3+=0.15");
+});
+mmedia.add("(max-width: 767px)", () => {
+  mainTimeline.fromTo("#x-logo", { opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 280, scale: 0.5, duration: 1 }, "scene3+=0.15");
+  mainTimeline.fromTo("#t-logo", { opacity: 0, x: 1000, scale: 0 }, { opacity: 0.7, y: -210, x: 390, scale: 0.65, duration: 1 }, "scene3+=0.15");
+});
+
+// Bird (starts at "15% top" ≈ 0.9 seconds)
+mainTimeline.fromTo(
+  "#bird",
+  { opacity: 0, x: -800 },
+  { opacity: 1, y: -250, x: 800, ease: "power2.out", duration: 1 },
+  "scene2"
+);
+mainTimeline.to(
+  "#bird",
+  { scaleX: 1, rotation: 0, duration: 0.1 }, // Face right when entering
+  "scene2"
+);
+mainTimeline.to(
+  "#bird",
+  { scaleX: -1, rotation: -15, duration: 0.1 }, // Face left when exiting
+  "scene2+=1" // At the end of the bird’s movement
+);
+mainTimeline.to(
+  "#bird",
+  { scaleX: 1, rotation: 0, duration: 0.1 }, // Face right when scrolling back up
+  "scene2" // Sync with start for reversal
+);
+
+// Falling star (starts at "4200 top" ≈ 4.2 seconds)
+mainTimeline.add("fstar", 4.2);
+mainTimeline.set("#fstar", { opacity: 1 }, "fstar");
+mainTimeline.to("#fstar", { x: -700, y: -250, ease: "power2.out", duration: 1, onComplete: function () {
+  gsap.set("#fstar", { opacity: 0 });
+}}, "fstar");
+
+// Reset scrollbar on refresh
+window.onbeforeunload = function () {
+  window.scrollTo(0, 0);
+};

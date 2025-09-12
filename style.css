@@ -118,6 +118,13 @@ a[xlink\\:href] {
   cursor: pointer;
 }
 
+#scene2_text, #testing2, #scene3_text, #stars, #x-logo, #t-logo, #bird {
+  opacity: 0;
+}
+#h2-1, #h2-2, #h2-3, #h2-4, #h2-5, #h2-6, #h3-1, #h3-2, #h3-3, #h3-4, #h3-5 {
+  transform: none;
+}
+
 /* MARK: ---0-490 Mobile */
 @media (max-width: 490px) {
 
