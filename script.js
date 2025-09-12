@@ -96,8 +96,8 @@ mainTimeline.fromTo("#h2-1", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duratio
 mainTimeline.fromTo("#h2-2", { y: 500 }, { y: 0, duration: 1 }, "scene2+=0.1");
 mainTimeline.fromTo("#h2-3", { y: 700 }, { y: 0, duration: 1 }, "scene2+=0.1");
 mainTimeline.fromTo("#h2-4", { y: 700 }, { y: 0, duration: 1 }, "scene2+=0.2");
-mainTimeline.fromTo("#h2-5", { y: 800 }, { y: 0, duration: 1 }, "scene2+=0.3");
-mainTimeline.fromTo("#h2-6", { y: 900 }, { y: 0, duration: 1 }, "scene2+=0.3");
+mainTimeline.fromTo("#h2-5", { y: 800 }, { y: 0, duration: 1 }, "scene2+=0.1"); //sped up from 0.2 for less open sky
+mainTimeline.fromTo("#h2-6", { y: 900 }, { y: 0, duration: 1 }, "scene2+=0.1");
 
 // Sun increase (starts at "2000 top" ≈ 2 seconds)
 mainTimeline.add("sunIncrease", 2);
