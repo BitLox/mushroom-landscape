@@ -54,7 +54,7 @@ ScrollTrigger.create({
   start: "top top",
   end: "6000 bottom",
   scrub: 1,
-  markers: true
+//   markers: true
 });
 
 // Scene 1 (starts at "top top" ≈ 0 seconds)
