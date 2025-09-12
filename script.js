@@ -111,7 +111,7 @@ ScrollTrigger.create({
     start: "1% top",
     end: "1500 top",
     // end: "2150 100%",
-    scrub: 2,
+    scrub: 1,
     // markers: true,
     //preventOverlaps: true, //if true, it will affect all preceding ScrollTriggers (you can use for example 'scrollTrigger1')
     //fastScrollEnd: true,   //(default 2500px/s)
@@ -136,7 +136,7 @@ ScrollTrigger.create({
     trigger: ".scrollElement",
     start: "15% top",
     end: "40% 100%",
-    scrub: 3
+    scrub: 1
 });
 
 scene2.fromTo("#h2-1", { y: 500, opacity: 0 }, { y: 0, opacity: 1 }, 0);
@@ -193,7 +193,7 @@ ScrollTrigger.create({
     trigger: ".scrollElement",
     start: "2000 top",
     end: "5000 100%",
-    scrub: 2,
+    scrub: 1,
     // markers: true
 });
 sun2.to("#scene2_text", { opacity: 0, x: -800 }, 0.1);
@@ -220,7 +220,7 @@ ScrollTrigger.create({
     trigger: ".scrollElement",
     start: "60% top",
     end: "bottom 100%",
-    scrub: 3,
+    scrub: 1,
     // markers: true
 });
 
