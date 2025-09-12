@@ -43,22 +43,6 @@ scene1.to("#cloudStart-R", { x: 300 }, 0);
 //animate text
 scene1.to("#info", { y: 8 * speed }, 0);
 
-// // GSAP timeline for color cycling
-// const tl = gsap.timeline({ repeat: -1, yoyo: true });
-
-// // Define color cycle array
-// const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ffff00'];
-
-// // Animate the fill color of the SVG path
-// colors.forEach((color, index) => {
-//     tl.to('#text', {
-//         fill: color,
-//         duration: 1,
-//         ease: 'none'
-//     }, index);
-// });
-
-
 // GSAP timeline for staggered color cycling
 const tl = gsap.timeline({ repeat: -1, yoyo: true });
 
@@ -125,9 +109,10 @@ ScrollTrigger.create({
     animation: sun,
     trigger: ".scrollElement",
     start: "1% top",
-    end: "2150 100%",
-    scrub: 2
-    //markers: true,
+    end: "1500 top",
+    // end: "2150 100%",
+    scrub: 2,
+    // markers: true,
     //preventOverlaps: true, //if true, it will affect all preceding ScrollTriggers (you can use for example 'scrollTrigger1')
     //fastScrollEnd: true,   //(default 2500px/s)
 });
@@ -141,6 +126,8 @@ sun.to("#bg_grad stop:nth-child(3)", { attr: { offset: "0.18" } }, 0);
 sun.to("#bg_grad stop:nth-child(4)", { attr: { offset: "0.25" } }, 0);
 sun.to("#bg_grad stop:nth-child(5)", { attr: { offset: "0.46" } }, 0);
 sun.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#FF9171" } }, 0);
+sun.fromTo("#scene2_text", { opacity: 0, y: 1210 }, { opacity: 1, y: -210 }, 0.15);
+
 
 /*   SCENE 2  */
 let scene2 = gsap.timeline();
@@ -158,6 +145,8 @@ scene2.fromTo("#h2-3", { y: 700 }, { y: 0 }, 0.1);
 scene2.fromTo("#h2-4", { y: 700 }, { y: 0 }, 0.2);
 scene2.fromTo("#h2-5", { y: 800 }, { y: 0 }, 0.3);
 scene2.fromTo("#h2-6", { y: 900 }, { y: 0 }, 0.3);
+
+// scene2.fromTo("#scene2_text", { opacity: 1 }, { opacity: 0, y: -2010 }, 0.25);
 
 
 /* Bats */
@@ -195,6 +184,8 @@ scene2.fromTo("#h2-6", { y: 900 }, { y: 0 }, 0.3);
 //     }
 // );
 
+
+
 /* Sun increase */
 let sun2 = gsap.timeline();
 ScrollTrigger.create({
@@ -203,10 +194,14 @@ ScrollTrigger.create({
     start: "2000 top",
     end: "5000 100%",
     scrub: 2,
-    markers: true
+    // markers: true
 });
+sun2.to("#scene2_text", { opacity: 0, x: -800 }, 0.1);
+// sun2.to("#scene2_text_b", { opacity: 0, x: 500 }, 0.25);
+// sun2.to("#scene2_text_c", { opacity: 0, x: -500 }, 0.25);
 
 // Let's insert the mushroom icon here
+
 
 sun2.to("#sun", { attr: { offset: "1.4" } }, 0);
 sun2.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.7" } }, 0);
@@ -216,21 +211,6 @@ sun2.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#623951" } }, 0);
 sun2.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" } }, 0);
 sun2.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#45224A" } }, 0);
 sun2.fromTo("#testing2", { opacity: 0 }, { opacity: 1, y: -100 }, 0.15);
-// const staticChars = gsap.utils.toArray(".static-char");
-
-// sun2.from(staticChars, {
-//     duration: 0.1,
-//     opacity: () => Math.random(), // Random opacity
-//     x: () => (Math.random() - 0.5) * 10, // Random x translation
-//     // y: () => (Math.random() - 0.5) * 10, // Random y translation
-//     stagger: {
-//         each: 0.02, // Spacing between each character's animation start
-//         from: "random" // Start staggering from a random element
-//     },
-//     repeat: -1, // Loop the animation indefinitely
-//     repeatDelay: 0.05 // Add a slight delay before repeating
-// });
-
 
 /* Transition (from Scene2 to Scene3) */
 gsap.set("#scene3", { y: height - 40, visibility: "visible" });
@@ -241,7 +221,7 @@ ScrollTrigger.create({
     start: "60% top",
     end: "bottom 100%",
     scrub: 3,
-    markers: true
+    // markers: true
 });
 
 sceneTransition.to("#h2-1", { y: -height - 100, scale: 1.5, transformOrigin: "50% 50%" }, 0);
