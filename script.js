@@ -202,8 +202,11 @@ ScrollTrigger.create({
     trigger: ".scrollElement",
     start: "2000 top",
     end: "5000 100%",
-    scrub: 2
+    scrub: 2,
+    markers: true
 });
+
+// Let's insert the mushroom icon here
 
 sun2.to("#sun", { attr: { offset: "1.4" } }, 0);
 sun2.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.7" } }, 0);
@@ -213,6 +216,21 @@ sun2.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#623951" } }, 0);
 sun2.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" } }, 0);
 sun2.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#45224A" } }, 0);
 sun2.fromTo("#testing2", { opacity: 0 }, { opacity: 1, y: -100 }, 0.15);
+// const staticChars = gsap.utils.toArray(".static-char");
+
+// sun2.from(staticChars, {
+//     duration: 0.1,
+//     opacity: () => Math.random(), // Random opacity
+//     x: () => (Math.random() - 0.5) * 10, // Random x translation
+//     // y: () => (Math.random() - 0.5) * 10, // Random y translation
+//     stagger: {
+//         each: 0.02, // Spacing between each character's animation start
+//         from: "random" // Start staggering from a random element
+//     },
+//     repeat: -1, // Loop the animation indefinitely
+//     repeatDelay: 0.05 // Add a slight delay before repeating
+// });
+
 
 /* Transition (from Scene2 to Scene3) */
 gsap.set("#scene3", { y: height - 40, visibility: "visible" });
@@ -222,7 +240,8 @@ ScrollTrigger.create({
     trigger: ".scrollElement",
     start: "60% top",
     end: "bottom 100%",
-    scrub: 3
+    scrub: 3,
+    markers: true
 });
 
 sceneTransition.to("#h2-1", { y: -height - 100, scale: 1.5, transformOrigin: "50% 50%" }, 0);
