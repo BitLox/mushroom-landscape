@@ -102,6 +102,13 @@ letter-spacing: 0em;
   fill: #F4F6F0; /* White text */
 }
 
+.snazzy-svg-text4 {
+  font-family: "Mojita","Asimovian", sans-serif;
+  font-size: 24px;
+  fill: #5f6772; 
+  z-index: -10;
+}
+
 #x-logo {
   pointer-events: all;
   cursor:pointer;
