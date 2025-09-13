@@ -7,7 +7,7 @@ gsap.set("#h2-1", { opacity: 0 });
 gsap.set("#bg_grad", { attr: { cy: "-50" } });
 gsap.set("#scene3", { y: height - 40, visibility: "visible" });
 gsap.set("#fstar", { y: -400 });
-gsap.set("#bird", { opacity: 0, x: -800 }); // Hide bird initially
+gsap.set("#bird", { opacity: 0, x: -800, scaleX: 1, rotation: 0 }); // Hide bird and set orientation
 
 const mm = gsap.matchMedia();
 mm.add("(max-width: 1922px)", () => {
@@ -54,7 +54,7 @@ ScrollTrigger.create({
   start: "top top",
   end: "6000 bottom",
   scrub: 1,
-//   markers: true
+  markers: false
 });
 
 // Scene 1 (starts at "top top" ≈ 0 seconds)
@@ -95,9 +95,9 @@ mainTimeline.add("scene2", 0.9);
 mainTimeline.fromTo("#h2-1", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "scene2");
 mainTimeline.fromTo("#h2-2", { y: 500 }, { y: 0, duration: 1 }, "scene2+=0.1");
 mainTimeline.fromTo("#h2-3", { y: 700 }, { y: 0, duration: 1 }, "scene2+=0.1");
-mainTimeline.fromTo("#h2-4", { y: 700 }, { y: 0, duration: 1 }, "scene2+=0.2");
-mainTimeline.fromTo("#h2-5", { y: 800 }, { y: 0, duration: 1 }, "scene2+=0.1"); //sped up from 0.2 for less open sky
-mainTimeline.fromTo("#h2-6", { y: 900 }, { y: 0, duration: 1 }, "scene2+=0.1");
+mainTimeline.to("#h2-4", { y: 0, duration: 1 }, "scene2+=0.2");
+mainTimeline.to("#h2-5", { y: 0, duration: 1 }, "scene2+=0.1");
+mainTimeline.to("#h2-6", { y: 0, duration: 1 }, "scene2+=0.1");
 
 // Sun increase (starts at "2000 top" ≈ 2 seconds)
 mainTimeline.add("sunIncrease", 2);
@@ -110,7 +110,7 @@ mainTimeline.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" }, d
 mainTimeline.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#45224A" }, duration: 1 }, "sunIncrease");
 mainTimeline.fromTo("#testing2", { opacity: 0 }, { opacity: 1, y: -100, duration: 1 }, "sunIncrease+=0.15");
 
-// Transition (Scene 2 to Scene 3, starts at "60% top" ≈ 3.6 seconds)
+// Transition (Scene 2 to Scene 3, starts at "60% top" ≈ 4 seconds)
 mainTimeline.add("sceneTransition", 4);
 mainTimeline.to("#h2-1", { y: -height - 100, scale: 1.5, transformOrigin: "50% 50%", duration: 1 }, "sceneTransition");
 mainTimeline.to("#bg_grad", { attr: { cy: "-80" }, duration: 1 }, "sceneTransition");
@@ -139,35 +139,31 @@ mmedia.add("(max-width: 767px)", () => {
   mainTimeline.fromTo("#t-logo", { opacity: 0, x: 1000, scale: 0 }, { opacity: 0.7, y: -210, x: 390, scale: 0.65, duration: 1 }, "scene3+=0.15");
 });
 
-// Bird (starts at "15% top" ≈ 0.9 seconds)
-mainTimeline.fromTo(
-  "#bird",
-  { opacity: 0, x: -800 },
-  { opacity: 1, y: -250, x: 800, ease: "power2.out", duration: 1 },
-  "scene2"
-);
-mainTimeline.to(
-  "#bird",
-  { scaleX: 1, rotation: 0, duration: 0.1 }, // Face right when entering
-  "scene2"
-);
-mainTimeline.to(
-  "#bird",
-  { scaleX: -1, rotation: -15, duration: 0.1 }, // Face left when exiting
-  "scene2+=1" // At the end of the bird’s movement
-);
-mainTimeline.to(
-  "#bird",
-  { scaleX: 1, rotation: 0, duration: 0.1 }, // Face right when scrolling back up
-  "scene2" // Sync with start for reversal
-);
+// Bird (starts at "15% top" ≈ 900px)
+gsap.to("#bird", {
+  opacity: 1,
+  y: -250,
+  x: 800,
+  scaleX: 1,
+  rotation: 0,
+  ease: "power2.out",
+  duration: 1,
+  scrollTrigger: {
+    trigger: ".scrollElement",
+    start: "15% top",
+    end: "30% top", // Approx. 1 second later in scroll terms
+    scrub: 1,
+    onEnter: () => gsap.set("#bird", { opacity: 1 }),
+    onLeave: () => gsap.set("#bird", { opacity: 0 }),
+    onEnterBack: () => gsap.set("#bird", { opacity: 0 }),
+    onLeaveBack: () => gsap.set("#bird", { opacity: 0 })
+  }
+});
 
 // Falling star (starts at "4200 top" ≈ 4.2 seconds)
 mainTimeline.add("fstar", 4.2);
 mainTimeline.set("#fstar", { opacity: 1 }, "fstar");
-mainTimeline.to("#fstar", { x: -700, y: -250, ease: "power2.out", duration: 1, onComplete: function () {
-  gsap.set("#fstar", { opacity: 0 });
-}}, "fstar");
+mainTimeline.to("#fstar", { x: -700, y: -250, ease: "power2.out", duration: 1, onComplete: () => gsap.set("#fstar", { opacity: 0 }) }, "fstar");
 
 // Reset scrollbar on refresh
 window.onbeforeunload = function () {

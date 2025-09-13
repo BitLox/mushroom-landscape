@@ -125,6 +125,10 @@ a[xlink\\:href] {
   transform: none;
 }
 
+#bird {
+  will-change: opacity;
+}
+
 /* MARK: ---0-490 Mobile */
 @media (max-width: 490px) {
 
