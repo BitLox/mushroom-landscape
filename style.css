@@ -87,7 +87,7 @@ letter-spacing: 0em;
 
 .snazzy-svg-text1 {
   font-family: "Mojita","Asimovian", sans-serif;
-  font-size: 14px;
+  font-size: 24px;
   fill: #231f20; /* White text */
 }
 .snazzy-svg-text2 {
@@ -99,13 +99,13 @@ letter-spacing: 0em;
 .snazzy-svg-text3 {
   font-family: "Mojita","Asimovian", sans-serif;
   font-size: 24px;
-  fill: #F4F6F0; /* White text */
+  fill: #f30ca2; 
 }
 
 .snazzy-svg-text4 {
   font-family: "Mojita","Asimovian", sans-serif;
   font-size: 24px;
-  fill: #5f6772; 
+  fill: #f30ca2; 
 }
 
 #x-logo {
@@ -137,6 +137,31 @@ a[xlink\\:href] {
         transform-origin: 50% 90%;
         transform: translateY(-120px) translateX(-7px)  scale(0.8);
     }
+
+    .snazzy-svg-text1 {
+      font-family: "Mojita","Asimovian", sans-serif;
+      font-size: 16px;
+      fill: #231f20; /* White text */
+    }
+
+    .snazzy-svg-text2 {
+      font-family: "Mojita","Asimovian", sans-serif;
+      font-size: 14px;
+      fill: #231f20; /* White text */
+    }
+
+    .snazzy-svg-text3 {
+      font-family: "Mojita","Asimovian", sans-serif;
+      font-size: 20px;
+      fill: #F4F6F0; /* White text */
+    }
+
+    .snazzy-svg-text4 {
+      font-family: "Mojita","Asimovian", sans-serif;
+      font-size: 24px;
+      fill: #5f6772; 
+    }
+
 
     /* #info2 {
         transform-origin: 50% 50%;

@@ -29,10 +29,28 @@ const cloudDriftR = gsap.to("#cloudStart-R", {
   repeat: -1,
   yoyo: true
 });
+
+// let headings = gsap.utils.toArray("snazzy-svg-text3");
+
+// headings.forEach(function (element, index) {
+//   gsap.to(element, {
+//     backgroundImage: "linear-gradient(#f60 100%, #ff0 200%, #f60 300%)",
+//     duration: 2,
+//     ease: "none",
+//     scrollTrigger: {
+//       trigger: element,
+//       start: "top 50%",
+//       end: "+=150px",
+//       scrub: true,
+//       markers: true
+//     }
+//   });
+// });
+
 // Color-cycling timeline (unchanged, non-scroll-based)
 const tl = gsap.timeline({ repeat: -1, yoyo: true });
 const colors = ['#ff0000', '#00ff00', '#0000ff', '#ff00ff', '#00ffff', '#ff4500', '#9932cc', '#00ced1', '#ff69b4', '#4682b4'];
-const selectors = ['#text1', '#text2top', '#text3', '#text4', '#text5', '#text6', '#text7', '#text8', '#text9', '#text10', '#text11', '#text12', '#text13', '#scene2_text', '#scene2_text_a', '#scene2_text_b', '#scene2_text_c','#testing2'];
+const selectors = ['#text1', '#text2top', '#text3', '#text4', '#text5', '#text6', '#text7', '#text8', '#text9', '#text10', '#text11', '#text12', '#text13', '#scene2_text', '#scene2_text_a', '#scene2_text_b', '#scene2_text_c','#testing2, #scene3_text'];
 selectors.forEach((selector, index) => {
   const shiftedColors = [...colors.slice(index), ...colors.slice(0, index)];
   shiftedColors.forEach((color, colorIndex) => {
