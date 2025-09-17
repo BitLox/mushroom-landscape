@@ -125,6 +125,7 @@ mainTimeline.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#FF9171" 
 mainTimeline.fromTo("#scene2_text_a", { opacity: 0, y: 1210 }, { opacity: 1, y: -210, duration: 1 }, "sunStart+=0.15");
 mainTimeline.fromTo("#scene2_text_b", { opacity: 0, y: 1210 }, { opacity: 1, y: -210, duration: 1 }, "sunStart+=0.15");
 mainTimeline.fromTo("#scene2_text_c", { opacity: 0, y: 1210 }, { opacity: 1, y: -210, duration: 1 }, "sunStart+=0.15");
+mainTimeline.fromTo("#scene2_text_d", { opacity: 0, y: 1210 }, { opacity: 1, y: -210, duration: 1 }, "sunStart+=0.15");
 // Scene 2 (starts at "15% top" ≈ 0.9 seconds)
 mainTimeline.add("scene2", 0.9);
 mainTimeline.fromTo("#h2-1", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "scene2");
@@ -139,6 +140,7 @@ mainTimeline.add("sunIncrease", 2);
 mainTimeline.to("#scene2_text_a", { opacity: 0, x: -800, duration: 1 }, "sunIncrease+=0.1");
 mainTimeline.to("#scene2_text_b", { opacity: 0, x: 800, duration: 1 }, "sunIncrease+=0.1");
 mainTimeline.to("#scene2_text_c", { opacity: 0, x: -800, duration: 1 }, "sunIncrease+=0.1");
+mainTimeline.to("#scene2_text_d", { opacity: 0, x: 800, duration: 1 }, "sunIncrease+=0.1");
 mainTimeline.to("#sun", { attr: { offset: "1.4" }, duration: 1 }, "sunIncrease");
 mainTimeline.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.7" }, duration: 1 }, "sunIncrease");
 mainTimeline.to("#sun", { attr: { "stop-color": "#F4F6F0" }, duration: 1 }, "sunIncrease");
