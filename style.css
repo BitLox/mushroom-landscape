@@ -3,11 +3,16 @@
   src: url('fonts/Mojita.ttf') format('truetype');
 }
 
+html {
+  background-color: rgb(0, 0, 0); /* Or any desired color */
+}
+
 
 body {
     margin: 0;
     padding: 0;
     font-family: "Canva Sans", Arial, Helvetica, sans-serif;
+    overscroll-behavior: contain; 
 }
 
 
