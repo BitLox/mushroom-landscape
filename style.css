@@ -15,6 +15,20 @@ body {
     position: relative;
 }
 
+/* Target the SVG <a> links with xlink:href */
+a[xlink\:href] {
+  pointer-events: all;
+  cursor: pointer;
+  display: inline-block; /* Helps with layout inside the SVG container */
+}
+
+/* Optional: Add a hover effect for that magic mushroom flair */
+a[xlink\:href]:hover g {
+  transform: scale(1.05); /* Gentle zoom on the icon group */
+  transition: transform 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); /* Subtle glow */
+}
+
 svg {
     display: block;
     width: 100%;
@@ -23,6 +37,11 @@ svg {
     z-index: 10;
     top: 0;
     left: 0;
+    pointer-events: none;
+}
+
+a[xlink\:href] * {
+  pointer-events: auto; /* Re-enable for the icons inside */
 }
 
 .scrollElement {
@@ -113,10 +132,15 @@ letter-spacing: 0em;
   cursor:pointer;
 }
 
-a[xlink\\:href] {
+#t-logo {
+  pointer-events: all;
+  cursor:pointer;
+}
+
+/* a[xlink\\:href] {
   pointer-events: all;
   cursor: pointer;
-}
+} */
 
 #scene2_text, #testing2, #scene3_text, #stars, #x-logo, #t-logo, #bird {
   opacity: 0;
