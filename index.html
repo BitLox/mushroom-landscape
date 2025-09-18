@@ -392,6 +392,40 @@
 <script src='https://unpkg.com/gsap@3/dist/gsap.min.js'></script>
 <script src='https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js'></script>
 <script src="./script.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const audio = document.getElementById('bgMusic');
+  const toggleButton = document.getElementById('musicToggle');
+  let isPlaying = false;
+
+  toggleButton.addEventListener('click', function() {
+    if (isPlaying) {
+      audio.pause();
+      toggleButton.textContent = '🔇'; // Muted icon
+      isPlaying = false;
+    } else {
+      audio.play();
+      toggleButton.textContent = '🔊'; // Playing icon
+      isPlaying = true;
+    }
+  });
+
+  // Optional: Start playing after user interaction (to comply with autoplay rules)
+  // You could tie this to a page load event or another button if needed
+});
+
+</script>
+
+
+<!-- Hidden audio element for background music -->
+<audio id="bgMusic" loop>
+  <source src="audio/mushroom-ambience.mp3" type="audio/mpeg">
+  <source src="audio/mushroom-ambience.ogg" type="audio/ogg"> <!-- Fallback for better compatibility -->
+  Your browser doesn't support audio. Download the track <a href="audio/mushroom-ambience.mp3">here</a>.
+</audio>
+
+<!-- Unobtrusive toggle button -->
+<button id="musicToggle" style="position: fixed; top: 20px; right: 20px; background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px; border-radius: 50%; cursor: pointer; font-size: 16px;">🔊</button>
 
 </body>
 </html>

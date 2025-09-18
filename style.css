@@ -129,6 +129,31 @@ a[xlink\\:href] {
   will-change: opacity;
 }
 
+#musicToggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  z-index: 1000; /* High z-index to ensure it's on top */
+  outline: none; /* Prevent outline issues */
+  user-select: none; /* Prevent text selection */
+  transition: background 0.3s ease;
+}
+
+#musicToggle:hover {
+  background: rgba(0,0,0,0.7);
+}
+
+/* Ensure audio element is hidden */
+#bgMusic {
+  display: none;
+}
 /* MARK: ---0-490 Mobile */
 @media (max-width: 490px) {
 
@@ -140,7 +165,7 @@ a[xlink\\:href] {
 
     .snazzy-svg-text1 {
       font-family: "Mojita","Asimovian", sans-serif;
-      font-size: 16px;
+      font-size: 18px;
       fill: #231f20; /* White text */
     }
 
@@ -152,7 +177,7 @@ a[xlink\\:href] {
 
     .snazzy-svg-text3 {
       font-family: "Mojita","Asimovian", sans-serif;
-      font-size: 20px;
+      font-size: 22px;
       fill: #F4F6F0; /* White text */
     }
 
