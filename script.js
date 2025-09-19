@@ -135,11 +135,11 @@ mainTimeline.to("#bg_grad stop:nth-child(6)", { attr: { "stop-color": "#45224A" 
 mainTimeline.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#623951" }, duration: 1 }, "sunIncrease");
 mainTimeline.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" }, duration: 1 }, "sunIncrease");
 mainTimeline.add("mushroomFade", 4);
-mainTimeline.to("#mushroom", { opacity: 0, duration: 0.5, onStart: () => console.log("Mushroom fading out!") }, "mushroomFade");
+mainTimeline.to("#mushroom", { opacity: 0, duration: 0.75, onStart: () => console.log("Mushroom fading out!") }, "mushroomFade");
 mainTimeline.add("testing2Enter", 4.25);
 mainTimeline.fromTo("#testing2", { opacity: 0 }, { opacity: 1, y: -100, duration: 0.5, onStart: () => console.log("Testing2 animating!") }, "testing2Enter");
 mainTimeline.add("testing2Fade", 6.25);
-mainTimeline.to("#testing2", { opacity: 0, duration: 0.5, onStart: () => console.log("Testing2 fading out!") }, "testing2Fade");
+mainTimeline.to("#testing2", { opacity: 0, duration: 0.75, onStart: () => console.log("Testing2 fading out!") }, "testing2Fade");
 // Transition (Scene 2 to Scene 3)
 mainTimeline.add("sceneTransition", 6.75);
 mainTimeline.to("#h2-1", { y: -height - 100, scale: 1.5, transformOrigin: "50% 50%", duration: 1, onStart: () => console.log("Scene transition starting!") }, "sceneTransition");
