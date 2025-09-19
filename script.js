@@ -73,7 +73,7 @@ ScrollTrigger.create({
   animation: mainTimeline,
   trigger: ".scrollElement",
   start: "top top",
-  end: "8000 bottom",
+  end: "10000 bottom", // Extended for scene3
   scrub: 1,
   // markers: true,
   onEnter: () => {
@@ -152,7 +152,7 @@ mainTimeline.to("#bg_grad", { attr: { cy: "-80" }, duration: 1 }, "sceneTransiti
 mainTimeline.to("#bg2", { y: 0, duration: 1 }, "sceneTransition");
 // Scene 3
 mainTimeline.add("scene3", 6.95);
-mainTimeline.fromTo("#h3-1", { y: 300 }, { y: -550, duration: 1 }, "scene3");
+mainTimeline.fromTo("#h3-1", { y: 300 }, { y: -550, duration: 1, onStart: () => console.log("Scene 3 starting!") }, "scene3");
 mainTimeline.fromTo("#h3-2", { y: 800 }, { y: -550, duration: 1 }, "scene3+=0.03");
 mainTimeline.fromTo("#h3-3", { y: 600 }, { y: -550, duration: 1 }, "scene3+=0.06");
 mainTimeline.fromTo("#h3-4", { y: 800 }, { y: -550, duration: 1 }, "scene3+=0.09");
