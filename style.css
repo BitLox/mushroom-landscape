@@ -27,12 +27,6 @@ a[xlink\:href] {
   display: inline-block; /* Helps with layout inside the SVG container */
 }
 
-/* Optional: Add a hover effect for that magic mushroom flair */
-a[xlink\:href]:hover g {
-  transform: scale(1.05); /* Gentle zoom on the icon group */
-  transition: transform 0.3s ease;
-  filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5)); /* Subtle glow */
-}
 
 svg {
     display: block;
@@ -130,6 +124,14 @@ letter-spacing: 0em;
   font-family: "Mojita","Asimovian", sans-serif;
   font-size: 24px;
   fill: #f30ca2; 
+}
+
+#testing2 {
+  z-index: 50;
+}
+
+#mushroom {
+  filter: drop-shadow(0 0 10px #FF69B4);
 }
 
 #x-logo {
