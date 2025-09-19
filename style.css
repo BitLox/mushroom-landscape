@@ -131,7 +131,11 @@ letter-spacing: 0em;
 }
 
 #mushroom {
-  filter: drop-shadow(0 0 10px #FF69B4);
+  filter: drop-shadow(0 0 10px #1c79f3);
+}
+
+.scrollElement {
+  min-height: 12000px;
 }
 
 #x-logo {

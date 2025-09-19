@@ -73,13 +73,10 @@ ScrollTrigger.create({
   animation: mainTimeline,
   trigger: ".scrollElement",
   start: "top top",
-  end: "10000 bottom", // Extended for scene3
+  end: "12000 bottom", // Extended for scene3
   scrub: 1,
-  // markers: true,
-  onEnter: () => {
-    cloudDriftL.kill();
-    cloudDriftR.kill();
-  }
+  markers: false, // Your change
+  invalidateOnRefresh: true // Ensure recalculation
 });
 // Scene 1
 mainTimeline.add("scene1", 0);
