@@ -75,7 +75,7 @@ ScrollTrigger.create({
   start: "top top",
   end: "8000 bottom",
   scrub: 1,
-  markers: true,
+  // markers: true,
   onEnter: () => {
     cloudDriftL.kill();
     cloudDriftR.kill();
