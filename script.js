@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.querySelector('.hamburger');
   const navMenu = document.querySelector('.nav-menu');
   const musicToggle = document.querySelector('#musicToggle');
+  const bgMusic = document.querySelector('#bgMusic');
 
+  // Hamburger button and nav menu
   if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('active');
@@ -39,16 +41,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (hamburger.classList.contains('active')) {
         // Animate to "X"
-        gsap.to('.line:nth-child(1)', { y: 5, rotation: 45, duration: 0.3, ease: 'power3.out' });
+        gsap.to('.line:nth-child(1)', { y: 7, rotation: 45, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
         gsap.to('.line:nth-child(2)', { opacity: 0, duration: 0.2, ease: 'power3.out' });
-        gsap.to('.line:nth-child(3)', { y: -5, rotation: -45, duration: 0.3, ease: 'power3.out' });
+        gsap.to('.line:nth-child(3)', { y: -7, rotation: -45, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
         // Slide in menu
         gsap.to('.nav-menu', { left: 0, duration: 0.5, ease: 'power3.out' });
       } else {
         // Animate back to hamburger
-        gsap.to('.line:nth-child(1)', { y: 0, rotation: 0, duration: 0.3, ease: 'power3.out' });
+        gsap.to('.line:nth-child(1)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
         gsap.to('.line:nth-child(2)', { opacity: 1, duration: 0.2, ease: 'power3.out' });
-        gsap.to('.line:nth-child(3)', { y: 0, rotation: 0, duration: 0.3, ease: 'power3.out' });
+        gsap.to('.line:nth-child(3)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
         // Slide out menu
         gsap.to('.nav-menu', { left: '-100%', duration: 0.4, ease: 'power3.in' });
       }
@@ -61,19 +63,64 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.addEventListener('mouseleave', () => {
       gsap.to('.hamburger', { scale: 1, backgroundColor: 'rgba(0,0,0,0.5)', duration: 0.2, ease: 'power3.out' });
     });
+
+    // Close menu on link click
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        hamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        // Animate back to hamburger
+        gsap.to('.line:nth-child(1)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
+        gsap.to('.line:nth-child(2)', { opacity: 1, duration: 0.2, ease: 'power3.out' });
+        gsap.to('.line:nth-child(3)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
+        // Slide out menu
+        gsap.to('.nav-menu', { left: '-100%', duration: 0.4, ease: 'power3.in' });
+      });
+    });
   } else {
     console.warn('Hamburger or nav-menu not found in DOM');
   }
 
-  if (musicToggle) {
+  // Music toggle and animation
+  if (musicToggle && bgMusic) {
+    let isPlaying = false;
+    // Create GSAP timeline for music playing animation
+    const musicPulse = gsap.timeline({ paused: true, repeat: -1 });
+    musicPulse.to('#musicToggle', { scale: 1.1, duration: 0.5, ease: 'power2.out' })
+             .to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power2.in' });
+
+    // Toggle music and animation
+    musicToggle.addEventListener('click', () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicPulse.pause();
+        gsap.to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power3.out' }); // Reset scale
+        musicToggle.textContent = '🔇'; // Muted icon
+        isPlaying = false;
+      } else {
+        bgMusic.play().catch((error) => {
+          console.warn('Audio play failed:', error);
+        });
+        musicPulse.play();
+        musicToggle.textContent = '🔊'; // Playing icon
+        isPlaying = true;
+      }
+    });
+
+    // Music toggle hover animation (only when not playing)
     musicToggle.addEventListener('mouseenter', () => {
-      gsap.to('#musicToggle', { scale: 1.1, backgroundColor: 'rgba(0,0,0,0.7)', duration: 0.2, ease: 'power3.out' });
+      if (!isPlaying) {
+        gsap.to('#musicToggle', { scale: 1.1, backgroundColor: 'rgba(0,0,0,0.7)', duration: 0.2, ease: 'power3.out' });
+      }
     });
     musicToggle.addEventListener('mouseleave', () => {
-      gsap.to('#musicToggle', { scale: 1, backgroundColor: 'rgba(0,0,0,0.5)', duration: 0.2, ease: 'power3.out' });
+      if (!isPlaying) {
+        gsap.to('#musicToggle', { scale: 1, backgroundColor: 'rgba(0,0,0,0.5)', duration: 0.2, ease: 'power3.out' });
+      }
     });
   } else {
-    console.warn('musicToggle not found in DOM');
+    console.warn('musicToggle or bgMusic not found in DOM');
   }
 });
 
@@ -149,7 +196,7 @@ mainTimeline.to("#h1-1", { y: 3 * speed, x: 1 * speed, scale: 0.9, ease: "power1
 mainTimeline.to("#h1-2", { y: 2.6 * speed, x: -0.6 * speed, ease: "power1.in", duration: 1 }, "scene1");
 mainTimeline.to("#h1-3", { y: 1.7 * speed, x: 1.2 * speed, duration: 1 }, "scene1+=0.03");
 mainTimeline.to("#h1-4", { y: 3 * speed, x: 1 * speed, duration: 1 }, "scene1+=0.03");
-mainTimeline.to("#h1-5", { y: 2 * speed, x: 1 * speed, duration: 1 }, "scene1+=0.03"); // Fixed typo
+mainTimeline.to("#h1-5", { y: 2 * speed, x: 1 * speed, duration: 1 }, "scene1+=0.03");
 mainTimeline.to("#h1-6", { y: 2.3 * speed, x: -2.5 * speed, duration: 1 }, "scene1");
 mainTimeline.to("#h1-7", { y: 5 * speed, x: 1.6 * speed, duration: 1 }, "scene1");
 mainTimeline.to("#h1-8", { y: 3.5 * speed, x: 0.2 * speed, duration: 1 }, "scene1");
