@@ -2,168 +2,133 @@
   font-family: "Mojita";
   src: url('fonts/Mojita.ttf') format('truetype');
 }
-
 html {
-  background-color: rgb(0, 0, 0); /* Or any desired color */
+  background-color: rgb(0, 0, 0);
 }
-
-
 body {
-    margin: 0;
-    padding: 0;
-    font-family: "Canva Sans", Arial, Helvetica, sans-serif;
-    overscroll-behavior: contain; 
+  margin: 0;
+  padding: 0;
+  font-family: "Canva Sans", Arial, Helvetica, sans-serif;
+  overscroll-behavior: contain;
 }
-
-
 .wrapper {
-    position: relative;
+  position: relative;
 }
-
-/* Target the SVG <a> links with xlink:href */
 a[xlink\:href] {
   pointer-events: all;
   cursor: pointer;
-  display: inline-block; /* Helps with layout inside the SVG container */
+  display: inline-block;
 }
-
-
 svg {
-    display: block;
-    width: 100%;
-    height: 100vh;
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    left: 0;
-    pointer-events: none;
+  display: block;
+  width: 100%;
+  height: 100vh;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  left: 0;
+  pointer-events: none;
 }
-
 a[xlink\:href] * {
-  pointer-events: auto; /* Re-enable for the icons inside */
+  pointer-events: auto;
 }
-
 .scrollElement {
-    position: absolute;
-    height: 6000px;
-    width: 100%;
-    top: 0;
-    z-index: 4;
+  position: absolute;
+  height: 6000px;
+  width: 100%;
+  top: 0;
+  z-index: 4;
 }
-
 .btn {
-    position: fixed;
-    bottom: 5%;
-    right: 0px;
-    transform: translateX(-50%);
-    border: 1px solid #fff;
-    border-radius: 5px;
-    font-size: 0.9rem;
-    padding: 0.5rem 0.7em;
-    background-color: transparent;
-    color: #ffffff;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    cursor: pointer;
-    transition: all .3s;
-    z-index: 11;
+  position: fixed;
+  bottom: 5%;
+  right: 0px;
+  transform: translateX(-50%);
+  border: 1px solid #fff;
+  border-radius: 5px;
+  font-size: 0.9rem;
+  padding: 0.5rem 0.7em;
+  background-color: transparent;
+  color: #ffffff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  cursor: pointer;
+  transition: all .3s;
+  z-index: 11;
 }
-
 .btn_works {
-    left: 100px;
-    right: unset;
-    text-decoration: none;
+  left: 100px;
+  right: unset;
+  text-decoration: none;
 }
-
 .btn:hover {
-    background: #ffffff;
-    color: rgb(65, 40, 224);
+  background: #ffffff;
+  color: rgb(65, 40, 224);
 }
-
 .cls-1 {
-font-family: Mojita, Mojita;
-font-size: 60px;
+  font-family: Mojita, Mojita;
+  font-size: 60px;
 }
-
 .title_text {
-    fill: #fff; 
-    stroke:#231f20; 
-    stroke-miterlimit:10; 
-    stroke-width:0.1;
+  fill: #fff;
+  stroke: #231f20;
+  stroke-miterlimit: 10;
+  stroke-width: 0.1;
 }
-
 .cls-7 {
-letter-spacing: 0em;
+  letter-spacing: 0em;
 }
-
 .asimovian-regular {
   font-family: "Asimovian", sans-serif;
   font-weight: 400;
   font-style: normal;
 }
-
-
 .snazzy-svg-text1 {
   font-family: "Mojita","Asimovian", sans-serif;
   font-size: 24px;
-  fill: #231f20; /* White text */
+  fill: #231f20;
 }
 .snazzy-svg-text2 {
   font-family: "Mojita","Asimovian", sans-serif;
   font-size: 14px;
-  fill: #231f20; /* White text */
+  fill: #231f20;
 }
-
 .snazzy-svg-text3 {
   font-family: "Mojita","Asimovian", sans-serif;
   font-size: 24px;
-  fill: #f30ca2; 
+  fill: #f30ca2;
 }
-
 .snazzy-svg-text4 {
   font-family: "Mojita","Asimovian", sans-serif;
   font-size: 24px;
-  fill: #f30ca2; 
+  fill: #f30ca2;
 }
-
 #testing2 {
   z-index: 50;
 }
-
 #mushroom {
   filter: drop-shadow(0 0 10px #1c79f3);
 }
-
 .scrollElement {
   min-height: 12000px;
 }
-
 #x-logo {
   pointer-events: all;
-  cursor:pointer;
+  cursor: pointer;
 }
-
 #t-logo {
   pointer-events: all;
-  cursor:pointer;
-}
-
-/* a[xlink\\:href] {
-  pointer-events: all;
   cursor: pointer;
-} */
-
+}
 #scene2_text, #testing2, #scene3_text, #stars, #x-logo, #t-logo, #bird {
   opacity: 0;
 }
 #h2-1, #h2-2, #h2-3, #h2-4, #h2-5, #h2-6, #h3-1, #h3-2, #h3-3, #h3-4, #h3-5 {
   transform: none;
 }
-
 #bird {
   will-change: opacity;
 }
-
 #musicToggle {
   position: fixed;
   top: 20px;
@@ -175,64 +140,113 @@ letter-spacing: 0em;
   border-radius: 50%;
   cursor: pointer;
   font-size: 16px;
-  z-index: 1000; /* High z-index to ensure it's on top */
-  outline: none; /* Prevent outline issues */
-  user-select: none; /* Prevent text selection */
-  transition: background 0.3s ease;
+  z-index: 1000;
+  outline: none;
+  user-select: none;
+  transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease; /* Added opacity */
 }
-
 #musicToggle:hover {
-  background: rgba(0,0,0,0.7);
+  background: rgba(0,0,0,0.7) !important; /* Ensure hover applies */
+  transform: scale(1.1);
+  opacity: 0.95; /* Subtle redraw trigger */
 }
-
-/* Ensure audio element is hidden */
+#musicToggle * {
+  pointer-events: auto; /* Ensure child elements don’t block hover */
+}
 #bgMusic {
   display: none;
 }
+/* Hamburger button */
+.hamburger {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  width: 36px;
+  height: 36px;
+  background: rgba(0,0,0,0.5);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  padding: 8px;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+/* Hamburger lines */
+.hamburger .line {
+  width: 18px;
+  height: 2px;
+  background: white;
+  margin: 3px 0;
+  border-radius: 2px;
+  transform-origin: center;
+}
+/* Hover effect */
+.hamburger:hover {
+  background: rgba(0,0,0,0.7);
+  transform: scale(1.1);
+}
+/* Navigation menu */
+.nav-menu {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 195px; /* Your updated width */
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  padding: 80px 20px 20px;
+  z-index: 1999;
+  pointer-events: none;
+  transition: left 0.3s ease;
+}
+.nav-menu.active {
+  left: 0;
+  pointer-events: auto;
+  overflow-y: auto;
+}
+.nav-menu ul {
+  list-style: none;
+  padding: 0;
+}
+.nav-menu li {
+  margin: 20px 0;
+}
+.nav-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  transition: color 0.3s ease;
+}
+.nav-menu a:hover {
+  color: #00ff88;
+}
 /* MARK: ---0-490 Mobile */
 @media (max-width: 490px) {
-
-    #text1,#text2top,#text3,#text4,#text5,#text6,#text7,#text8,#text9,#text10,#text11,#text12,#text13,
-    #arrow {
-        transform-origin: 50% 90%;
-        transform: translateY(-120px) translateX(-7px)  scale(0.8);
-    }
-
-    .snazzy-svg-text1 {
-      font-family: "Mojita","Asimovian", sans-serif;
-      font-size: 18px;
-      fill: #231f20; /* White text */
-    }
-
-    .snazzy-svg-text2 {
-      font-family: "Mojita","Asimovian", sans-serif;
-      font-size: 14px;
-      fill: #231f20; /* White text */
-    }
-
-    .snazzy-svg-text3 {
-      font-family: "Mojita","Asimovian", sans-serif;
-      font-size: 22px;
-      fill: #F4F6F0; /* White text */
-    }
-
-    .snazzy-svg-text4 {
-      font-family: "Mojita","Asimovian", sans-serif;
-      font-size: 24px;
-      fill: #5f6772; 
-    }
-
-
-    /* #info2 {
-        transform-origin: 50% 50%;
-        transform: translateY(-120px) scale(0.8);
-    } */
-
-    /* .snazzy-svg-text3 {
+  #text1, #text2top, #text3, #text4, #text5, #text6, #text7, #text8, #text9, #text10, #text11, #text12, #text13, #arrow {
+    transform-origin: 50% 90%;
+    transform: translateY(-120px) translateX(-7px) scale(0.8);
+  }
+  .snazzy-svg-text1 {
     font-family: "Mojita","Asimovian", sans-serif;
-    font-size: 12px;
-    fill: #F4F6F0; 
-    } */
-
-    
+    font-size: 18px;
+    fill: #231f20;
+  }
+  .snazzy-svg-text2 {
+    font-family: "Mojita","Asimovian", sans-serif;
+    font-size: 14px;
+    fill: #231f20;
+  }
+  .snazzy-svg-text3 {
+    font-family: "Mojita","Asimovian", sans-serif;
+    font-size: 22px;
+    fill: #F4F6F0;
+  }
+  .snazzy-svg-text4 {
+    font-family: "Mojita","Asimovian", sans-serif;
+    font-size: 24px;
+    fill: #5f6772;
+  }
 }
