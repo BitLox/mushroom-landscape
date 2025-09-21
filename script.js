@@ -82,6 +82,31 @@ document.addEventListener('DOMContentLoaded', () => {
     console.warn('Hamburger or nav-menu not found in DOM');
   }
 
+// Whitepaper Pop-up Logic
+    const whitepaperLink = document.getElementById('whitepaper-link');
+    const popup = document.getElementById('whitepaper-popup');
+
+    whitepaperLink.addEventListener('click', (e) => {
+      e.preventDefault(); // Prevent default link behavior
+      popup.classList.add('active');
+      document.body.style.overflow = 'hidden'; // Prevent background scrolling
+    });
+
+    // Close pop-up on any click
+    popup.addEventListener('click', () => {
+      popup.classList.remove('active');
+      document.body.style.overflow = ''; // Restore scrolling
+    });
+
+    // Optional: Close pop-up on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popup.classList.contains('active')) {
+        popup.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
+
+
   // Music toggle and animation
   if (musicToggle && bgMusic) {
     let isPlaying = false;

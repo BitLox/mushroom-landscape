@@ -223,6 +223,46 @@ a[xlink\:href] * {
 .nav-menu a:hover {
   color: #00ff88;
 }
+
+/* Pop-up Styling */
+    .popup {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 30;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    .popup.active {
+      display: flex;
+    }
+    .popup-content {
+      max-height: 80vh;
+      overflow-y: auto;
+      background: #fff;
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      max-width: 48rem;
+      width: 100%;
+      scrollbar-width: thin;
+      scrollbar-color: #6b7280 #e5e7eb;
+    }
+    .popup-content::-webkit-scrollbar {
+      width: 8px;
+    }
+    .popup-content::-webkit-scrollbar-track {
+      background: #e5e7eb;
+    }
+    .popup-content::-webkit-scrollbar-thumb {
+      background: #6b7280;
+      border-radius: 4px;
+    }
+    .table-container {
+      overflow-x: auto;
+    }
+
 /* MARK: ---0-490 Mobile */
 @media (max-width: 490px) {
   #text1, #text2top, #text3, #text4, #text5, #text6, #text7, #text8, #text9, #text10, #text11, #text12, #text13, #arrow {
