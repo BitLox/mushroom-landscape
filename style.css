@@ -175,7 +175,7 @@ a[xlink\:href] * {
   padding: 8px;
   transition: background 0.3s ease, transform 0.3s ease;
 }
-/* Hamburger lines  2 or 3*/
+/* Hamburger lines  2 or 3 touch test */
 .hamburger .line {
   width: 18px;
   height: 2px;
