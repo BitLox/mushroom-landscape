@@ -2,7 +2,6 @@ gsap.registerPlugin(ScrollTrigger);
 
 // Initialize variables and settings
 let speed = 100;
-
 // Calculate height excluding #mushroom
 gsap.set("#mushroom", { display: "none" }); // Hide mushroom for bbox calc
 let height = document.querySelector("svg").getBBox().height;
@@ -22,9 +21,6 @@ const mm = gsap.matchMedia();
 mm.add("(max-width: 1922px)", () => {
   gsap.set(["#cloudStart-L", "#cloudStart-R"], { x: 10, opacity: 1 });
 });
-mm.add("(max-width: 767px)", () => {
-  gsap.set("#mushroom", { x: 198.5, y: 40 * 0.5 }); // Fixed x centering, scaled y
-});
 
 // Nav burger and music toggle
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,13 +28,11 @@ document.addEventListener('DOMContentLoaded', () => {
   const navMenu = document.querySelector('.nav-menu');
   const musicToggle = document.querySelector('#musicToggle');
   const bgMusic = document.querySelector('#bgMusic');
-
   // Hamburger button and nav menu
   if (hamburger && navMenu) {
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('active');
       navMenu.classList.toggle('active');
-
       if (hamburger.classList.contains('active')) {
         // Animate to "X"
         gsap.to('.line:nth-child(1)', { y: 7, rotation: 45, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
@@ -55,7 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.to('.nav-menu', { left: '-100%', duration: 0.4, ease: 'power3.in' });
       }
     });
-
     // Hamburger hover animation (needs fixing) test touch
     hamburger.addEventListener('mouseenter', () => {
       gsap.to('.hamburger', { scale: 1.1, backgroundColor: 'rgba(0,0,0,0.7)', duration: 0.2, ease: 'power3.out' });
@@ -63,7 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
     hamburger.addEventListener('mouseleave', () => {
       gsap.to('.hamburger', { scale: 1, backgroundColor: 'rgba(0,0,0,0.5)', duration: 0.2, ease: 'power3.out' });
     });
-
     // Close menu on link click
     const navLinks = document.querySelectorAll('.nav-menu a');
     navLinks.forEach(link => {
@@ -81,40 +73,33 @@ document.addEventListener('DOMContentLoaded', () => {
   } else {
     console.warn('Hamburger or nav-menu not found in DOM');
   }
-
-// Whitepaper Pop-up Logic
-    const whitepaperLink = document.getElementById('whitepaper-link');
-    const popup = document.getElementById('whitepaper-popup');
-
-    whitepaperLink.addEventListener('click', (e) => {
-      e.preventDefault(); // Prevent default link behavior
-      popup.classList.add('active');
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
-    });
-
-    // Close pop-up on any click
-    popup.addEventListener('click', () => {
+  // Whitepaper Pop-up Logic
+  const whitepaperLink = document.getElementById('whitepaper-link');
+  const popup = document.getElementById('whitepaper-popup');
+  whitepaperLink.addEventListener('click', (e) => {
+    e.preventDefault(); // Prevent default link behavior
+    popup.classList.add('active');
+    document.body.style.overflow = 'hidden'; // Prevent background scrolling
+  });
+  // Close pop-up on any click
+  popup.addEventListener('click', () => {
+    popup.classList.remove('active');
+    document.body.style.overflow = ''; // Restore scrolling
+  });
+  // Optional: Close pop-up on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && popup.classList.contains('active')) {
       popup.classList.remove('active');
-      document.body.style.overflow = ''; // Restore scrolling
-    });
-
-    // Optional: Close pop-up on Escape key
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && popup.classList.contains('active')) {
-        popup.classList.remove('active');
-        document.body.style.overflow = '';
-      }
-    });
-
-
+      document.body.style.overflow = '';
+    }
+  });
   // Music toggle and animation
   if (musicToggle && bgMusic) {
     let isPlaying = false;
     // Create GSAP timeline for music playing animation
     const musicPulse = gsap.timeline({ paused: true, repeat: -1 });
     musicPulse.to('#musicToggle', { scale: 1.1, duration: 0.5, ease: 'power2.out' })
-             .to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power2.in' });
-
+              .to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power2.in' });
     // Toggle music and animation
     musicToggle.addEventListener('click', () => {
       if (isPlaying) {
@@ -132,7 +117,6 @@ document.addEventListener('DOMContentLoaded', () => {
         isPlaying = true;
       }
     });
-
     // Music toggle hover animation (only when not playing)
     musicToggle.addEventListener('mouseenter', () => {
       if (!isPlaying) {
@@ -168,8 +152,8 @@ const cloudDriftR = gsap.to("#cloudStart-R", {
 });
 
 // Color-cycling timeline
-const tl = gsap.timeline({ 
-  repeat: -1, 
+const tl = gsap.timeline({
+  repeat: -1,
   yoyo: true,
   onStart: () => console.log('Color cycling started')
 });
@@ -261,10 +245,30 @@ mainTimeline.fromTo("#h2-4", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duratio
 mainTimeline.fromTo("#h2-5", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "scene2+=0.1");
 mainTimeline.fromTo("#h2-6", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "scene2+=0.1");
 
+// New matchMedia for #mushroom animation
+mm.add({
+  isMobile: "(max-width: 767px)",
+  isDesktop: "(min-width: 768px)"
+}, (context) => {
+  const { isMobile, isDesktop } = context.conditions;
+  console.log("Mushroom animation added at sunIncrease, Mobile:", isMobile, "Desktop:", isDesktop);
+  mainTimeline.fromTo(
+    "#mushroom",
+    { opacity: 0, scale: 0, y: 500 },
+    {
+      opacity: 1,
+      scale: isMobile ? 0.7 : 0.8,
+      y: 40,
+      x: 198.5,
+      duration: 1,
+      onStart: () => console.log("Mushroom animating!")
+    },
+    "sunIncrease"
+  );
+});
+
 // Sun increase
 mainTimeline.add("sunIncrease", 2);
-// mainTimeline.fromTo("#mushroom", { opacity: 0, scale: 0, y: 500 }, { opacity: 1, scale: 0.8, y: 40, duration: 1, onStart: () => console.log("Mushroom animating!") }, "sunIncrease");
-mainTimeline.fromTo("#mushroom", { opacity: 0, scale: 0, y: 500 }, { opacity: 1, scale: 0.6, y: 40, duration: 1, onStart: () => console.log("Mushroom animating!") }, "sunIncrease");
 mainTimeline.to("#scene2_text_a", { opacity: 0, x: -800, duration: 1 }, "sunIncrease+=0.1");
 mainTimeline.to("#scene2_text_b", { opacity: 0, x: 800, duration: 1 }, "sunIncrease+=0.1");
 mainTimeline.to("#scene2_text_c", { opacity: 0, x: -800, duration: 1 }, "sunIncrease+=0.1");
@@ -304,14 +308,23 @@ mainTimeline.to("#bg2-grad", { attr: { cy: 600 }, duration: 1 }, "scene3");
 mainTimeline.to("#bg2-grad", { attr: { r: 500 }, duration: 1 }, "scene3");
 
 // Handle #x-logo and #t-logo with matchMedia
-const mmedia = gsap.matchMedia();
-mmedia.add("(min-width: 768px)", () => {
-  mainTimeline.fromTo("#x-logo", { opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 280, scale: 0.5, duration: 1 }, "scene3+=0.15");
-  mainTimeline.fromTo("#t-logo", { opacity: 0, x: 1000, scale: 0 }, { opacity: 0.7, y: -210, x: 390, scale: 0.65, duration: 1 }, "scene3+=0.15");
-});
-mmedia.add("(max-width: 767px)", () => {
-  mainTimeline.fromTo("#x-logo", { opacity: 0, scale: 0 }, { opacity: 0.7, y: -200, x: 280, scale: 0.5, duration: 1 }, "scene3+=0.15");
-  mainTimeline.fromTo("#t-logo", { opacity: 0, x: 1000, scale: 0 }, { opacity: 0.7, y: -210, x: 390, scale: 0.65, duration: 1 }, "scene3+=0.15");
+mm.add({
+  isMobile: "(max-width: 767px)",
+  isDesktop: "(min-width: 768px)"
+}, (context) => {
+  const { isMobile, isDesktop } = context.conditions;
+  mainTimeline.fromTo(
+    "#x-logo",
+    { opacity: 0, scale: 0 },
+    { opacity: 0.7, y: -200, x: 280, scale: 0.5, duration: 1 },
+    "scene3+=0.15"
+  );
+  mainTimeline.fromTo(
+    "#t-logo",
+    { opacity: 0, x: 1000, scale: 0 },
+    { opacity: 0.7, y: -210, x: 390, scale: 0.65, duration: 1 },
+    "scene3+=0.15"
+  );
 });
 
 // Bird
