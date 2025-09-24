@@ -263,7 +263,8 @@ mainTimeline.fromTo("#h2-6", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duratio
 
 // Sun increase
 mainTimeline.add("sunIncrease", 2);
-mainTimeline.fromTo("#mushroom", { opacity: 0, scale: 0, y: 500 }, { opacity: 1, scale: 0.8, y: 40, duration: 1, onStart: () => console.log("Mushroom animating!") }, "sunIncrease");
+// mainTimeline.fromTo("#mushroom", { opacity: 0, scale: 0, y: 500 }, { opacity: 1, scale: 0.8, y: 40, duration: 1, onStart: () => console.log("Mushroom animating!") }, "sunIncrease");
+mainTimeline.fromTo("#mushroom", { opacity: 0, scale: 0, y: 500 }, { opacity: 1, scale: 0.6, y: 40, duration: 1, onStart: () => console.log("Mushroom animating!") }, "sunIncrease");
 mainTimeline.to("#scene2_text_a", { opacity: 0, x: -800, duration: 1 }, "sunIncrease+=0.1");
 mainTimeline.to("#scene2_text_b", { opacity: 0, x: 800, duration: 1 }, "sunIncrease+=0.1");
 mainTimeline.to("#scene2_text_c", { opacity: 0, x: -800, duration: 1 }, "sunIncrease+=0.1");
