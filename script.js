@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // Hamburger hover animation
+    // Hamburger hover animation (needs fixing)
     hamburger.addEventListener('mouseenter', () => {
       gsap.to('.hamburger', { scale: 1.1, backgroundColor: 'rgba(0,0,0,0.7)', duration: 0.2, ease: 'power3.out' });
     });
