@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let isPlaying = false;
     // Create GSAP timeline for music playing animation
     const musicPulse = gsap.timeline({ paused: true, repeat: -1 });
-    musicPulse.to('#musicToggle', { scale: 1.1, duration: 0.5, ease: 'power2.out' })
+    musicPulse.to('#musicToggle', { scale: 1.2, duration: 0.5, ease: 'power2.out' })
               .to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power2.in' });
     // Toggle music and animation
     musicToggle.addEventListener('click', () => {
@@ -266,6 +266,8 @@ mm.add({
     "sunIncrease"
   );
 });
+
+
 
 // Sun increase
 mainTimeline.add("sunIncrease", 2);
