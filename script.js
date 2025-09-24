@@ -257,7 +257,7 @@ mm.add({
     { opacity: 0, scale: 0, y: 500 },
     {
       opacity: 1,
-      scale: isMobile ? 0.7 : 0.8,
+      scale: isMobile ? 0.6 : 0.8,
       y: 40,
       x: 198.5,
       duration: 1,
