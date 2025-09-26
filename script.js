@@ -268,7 +268,6 @@ mm.add({
 });
 
 
-
 // Sun increase
 mainTimeline.add("sunIncrease", 2);
 mainTimeline.to("#scene2_text_a", { opacity: 0, x: -800, duration: 1 }, "sunIncrease+=0.1");
