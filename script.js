@@ -1,5 +1,4 @@
 gsap.registerPlugin(ScrollTrigger);
-
 // Initialize variables and settings
 let speed = 100;
 // Calculate height excluding #mushroom
@@ -17,11 +16,142 @@ gsap.set("#bird", { opacity: 0, x: -800, scaleX: 1, rotation: 0 });
 gsap.set("#mushroom", { opacity: 0, scale: 0, transformOrigin: "50% 100%", x: 198.5, y: 500 }); // Start below screen
 gsap.set("#testing2", { opacity: 0 }); // Ensure testing2 is ready
 
+// Updated particle effect code with fixed global click-to-fade-out
+document.addEventListener('DOMContentLoaded', () => {
+  let clickCount = 0;
+  let particleAlpha = 0;
+  let fadeOut = false;
+  let fadeStartTime = null;
+  let fadeFromAlpha = 0;
+  let animationId = null;
+  const particles = [];
+  const canvas = document.querySelector('#particle-canvas');
+  
+  if (canvas) {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    
+    // Generate 1500 particles
+    for (let i = 0; i < 1500; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 5 + 2,
+        color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+        speed: Math.random() * 2 + 1,
+        angle: Math.random() * Math.PI * 2,
+      });
+    }
+    
+    // Quadratic ease-out function
+    const easeOutQuad = (t) => t * (2 - t);
+    
+    // Animation loop
+    const animate = (timestamp) => {
+      const ctx = canvas.getContext('2d');
+      
+      // Handle fade out
+      if (fadeOut) {
+        if (!fadeStartTime) fadeStartTime = timestamp || performance.now();
+        const elapsed = (timestamp || performance.now()) - fadeStartTime;
+        const progress = Math.min(elapsed / 1000, 1); // 1s fade
+        particleAlpha = fadeFromAlpha * (1 - easeOutQuad(progress));
+        if (progress >= 1) {
+          particleAlpha = 0;
+          fadeOut = false;
+          fadeStartTime = null;
+          fadeFromAlpha = 0;
+          clickCount = 0;
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          cancelAnimationFrame(animationId);
+          animationId = null;
+          return;
+        }
+      }
+      
+      // Semi-transparent fill for trails
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      
+      // Set alpha for particles
+      ctx.globalAlpha = particleAlpha;
+      particles.forEach((p) => {
+        // Random curve by adjusting angle
+        p.angle += (Math.random() - 0.5) * 0.2;
+        p.x += Math.cos(p.angle) * p.speed;
+        p.y += Math.sin(p.angle) * p.speed;
+        
+        // Wrap around edges
+        if (p.x < -p.radius) p.x = canvas.width + p.radius;
+        if (p.x > canvas.width + p.radius) p.x = -p.radius;
+        if (p.y < -p.radius) p.y = canvas.height + p.radius;
+        if (p.y > canvas.height + p.radius) p.y = -p.radius;
+        
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+      });
+      ctx.globalAlpha = 1;
+      
+      animationId = requestAnimationFrame(animate);
+    };
+    
+    // Click handler for #myco-trip
+    const tripLink = document.getElementById('myco-trip');
+    if (tripLink) {
+      tripLink.addEventListener('click', (e) => {
+        e.preventDefault(); // Prevent default nav behavior
+        e.stopPropagation(); // Prevent this click from triggering global click handler
+        if (fadeOut) return;
+        clickCount += 1;
+        let targetAlpha;
+        switch (clickCount) {
+          case 1:
+            targetAlpha = 1.0;
+            break;
+          default:
+            fadeOut = true;
+            fadeStartTime = null;
+            fadeFromAlpha = particleAlpha;
+            return;
+        }
+        particleAlpha = targetAlpha;
+        if (!animationId) {
+          animationId = requestAnimationFrame(animate);
+        }
+      });
+    }
+    
+    // Global click handler to trigger fade-out when particles are active
+    document.addEventListener('click', (e) => {
+      if (clickCount === 1 && particleAlpha > 0 && !fadeOut) {
+        fadeOut = true;
+        fadeStartTime = null;
+        fadeFromAlpha = particleAlpha;
+      }
+    });
+    
+    // Resize handler
+    const handleResize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      // Reposition particles on resize
+      particles.forEach((p) => {
+        p.x = Math.random() * canvas.width;
+        p.y = Math.random() * canvas.height;
+      });
+    };
+    window.addEventListener('resize', handleResize);
+  }
+});
+// ###############################
+// End updated particle effect code
+
 const mm = gsap.matchMedia();
 mm.add("(max-width: 1922px)", () => {
   gsap.set(["#cloudStart-L", "#cloudStart-R"], { x: 10, opacity: 1 });
 });
-
 // Nav burger and music toggle
 document.addEventListener('DOMContentLoaded', () => {
   const hamburger = document.querySelector('.hamburger');
@@ -132,7 +262,6 @@ document.addEventListener('DOMContentLoaded', () => {
     console.warn('musicToggle or bgMusic not found in DOM');
   }
 });
-
 // Cloud drift animations
 const cloudDriftL = gsap.to("#cloudStart-L", {
   x: 100,
@@ -150,7 +279,6 @@ const cloudDriftR = gsap.to("#cloudStart-R", {
   yoyo: true,
   onStart: () => console.log('Cloud R drifting')
 });
-
 // Color-cycling timeline
 const tl = gsap.timeline({
   repeat: -1,
@@ -169,7 +297,6 @@ selectors.forEach((selector, index) => {
     }, colorIndex + (index * 0.2));
   });
 });
-
 // Twinkling stars
 gsap.fromTo("#stars path:nth-of-type(1)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 0.8 });
 gsap.fromTo("#stars path:nth-of-type(3)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 1.8 });
@@ -186,7 +313,6 @@ gsap.fromTo("#stars path:nth-of-type(35)", { opacity: 0.3 }, { opacity: 1, durat
 gsap.fromTo("#stars path:nth-of-type(40)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 0.8 });
 gsap.fromTo("#stars path:nth-of-type(45)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 1.8 });
 gsap.fromTo("#stars path:nth-of-type(48)", { opacity: 0.3 }, { opacity: 1, duration: 0.3, repeat: -1, repeatDelay: 1 });
-
 // Main scroll-based timeline
 let mainTimeline = gsap.timeline();
 ScrollTrigger.create({
@@ -198,7 +324,6 @@ ScrollTrigger.create({
   markers: false,
   invalidateOnRefresh: true
 });
-
 // Scene 1
 mainTimeline.add("scene1", 0);
 mainTimeline.to("#h1-1", { y: 3 * speed, x: 1 * speed, scale: 0.9, ease: "power1.in", duration: 1 }, "scene1");
@@ -216,13 +341,11 @@ mainTimeline.to("#cloudStart-L", { x: -300, opacity: 0, duration: 1, ease: "powe
 mainTimeline.to("#cloudStart-R", { x: 300, opacity: 0, duration: 1, ease: "power1.out" }, "scene1");
 mainTimeline.to("#info", { y: 8 * speed, duration: 1 }, "scene1");
 mainTimeline.set(["#cloudStart-L", "#cloudStart-R"], { opacity: 0 }, "scene1+=1");
-
 // Clouds
 mainTimeline.to("#cloud1", { x: 500, duration: 1 }, "scene1");
 mainTimeline.to("#cloud2", { x: 1000, duration: 1 }, "scene1");
 mainTimeline.to("#cloud3", { x: -1000, duration: 1 }, "scene1");
 mainTimeline.to("#cloud4", { x: -700, y: 25, duration: 1 }, "scene1");
-
 // Sun motion and background
 mainTimeline.add("sunStart", 0.06);
 mainTimeline.fromTo("#bg_grad", { attr: { cy: "-50" } }, { attr: { cy: "330" }, duration: 1 }, "sunStart");
@@ -235,7 +358,6 @@ mainTimeline.fromTo("#scene2_text_a", { opacity: 0, y: 1210 }, { opacity: 1, y: 
 mainTimeline.fromTo("#scene2_text_b", { opacity: 0, y: 1210 }, { opacity: 1, y: -210, duration: 1 }, "sunStart+=0.15");
 mainTimeline.fromTo("#scene2_text_c", { opacity: 0, y: 1210 }, { opacity: 1, y: -210, duration: 1 }, "sunStart+=0.15");
 mainTimeline.fromTo("#scene2_text_d", { opacity: 0, y: 1210 }, { opacity: 1, y: -210, duration: 1 }, "sunStart+=0.15");
-
 // Scene 2
 mainTimeline.add("scene2", 0.9);
 mainTimeline.fromTo("#h2-1", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "scene2");
@@ -244,7 +366,6 @@ mainTimeline.fromTo("#h2-3", { y: 700, opacity: 0 }, { y: 0, opacity: 1, duratio
 mainTimeline.fromTo("#h2-4", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "scene2+=0.2");
 mainTimeline.fromTo("#h2-5", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "scene2+=0.1");
 mainTimeline.fromTo("#h2-6", { y: 500, opacity: 0 }, { y: 0, opacity: 1, duration: 1 }, "scene2+=0.1");
-
 // New matchMedia for #mushroom animation
 mm.add({
   isMobile: "(max-width: 767px)",
@@ -266,8 +387,6 @@ mm.add({
     "sunIncrease"
   );
 });
-
-
 // Sun increase
 mainTimeline.add("sunIncrease", 2);
 mainTimeline.to("#scene2_text_a", { opacity: 0, x: -800, duration: 1 }, "sunIncrease+=0.1");
@@ -284,7 +403,6 @@ mainTimeline.add("testing2Enter", 4.25);
 mainTimeline.fromTo("#testing2", { opacity: 0 }, { opacity: 1, y: -100, duration: 0.5, onStart: () => console.log("Testing2 animating!") }, "testing2Enter");
 mainTimeline.add("testing2Fade", 6.25);
 mainTimeline.to("#testing2", { opacity: 0, duration: 0.75, onStart: () => console.log("Testing2 fading out!") }, "testing2Fade");
-
 // Transition (Scene 2 to Scene 3)
 mainTimeline.add("sceneTransition", 6.75);
 mainTimeline.to("#h2-1", { y: -height - 100, scale: 1.5, transformOrigin: "50% 50%", duration: 1, onStart: () => console.log("Scene transition starting!") }, "sceneTransition");
@@ -295,7 +413,6 @@ mainTimeline.to("#h2-5", { opacity: 0, y: -height - 100, duration: 1, ease: "pow
 mainTimeline.to("#h2-6", { opacity: 0, y: -height - 100, duration: 1, ease: "power1.out" }, "sceneTransition");
 mainTimeline.to("#bg_grad", { attr: { cy: "-80" }, duration: 1 }, "sceneTransition");
 mainTimeline.to("#bg2", { y: 0, duration: 1 }, "sceneTransition");
-
 // Scene 3
 mainTimeline.add("scene3", 6.95);
 mainTimeline.fromTo("#h3-1", { y: 300 }, { y: -550, duration: 1, onStart: () => console.log("Scene 3 starting!") }, "scene3");
@@ -307,7 +424,6 @@ mainTimeline.fromTo("#stars", { opacity: 0 }, { opacity: 0.5, y: -500, duration:
 mainTimeline.fromTo("#scene3_text", { opacity: 0 }, { opacity: 0.7, y: -710, duration: 1 }, "scene3+=0.25");
 mainTimeline.to("#bg2-grad", { attr: { cy: 600 }, duration: 1 }, "scene3");
 mainTimeline.to("#bg2-grad", { attr: { r: 500 }, duration: 1 }, "scene3");
-
 // Handle #x-logo and #t-logo with matchMedia
 mm.add({
   isMobile: "(max-width: 767px)",
@@ -327,7 +443,6 @@ mm.add({
     "scene3+=0.15"
   );
 });
-
 // Bird
 gsap.to("#bird", {
   opacity: 1,
@@ -348,12 +463,10 @@ gsap.to("#bird", {
     onLeaveBack: () => gsap.set("#bird", { opacity: 0 })
   }
 });
-
 // Falling star
 mainTimeline.add("fstar", 6.95);
 mainTimeline.set("#fstar", { opacity: 1 }, "fstar");
 mainTimeline.to("#fstar", { x: -700, y: -250, ease: "power2.out", duration: 1, onComplete: () => gsap.set("#fstar", { opacity: 0 }) }, "fstar");
-
 // Reset scrollbar on refresh
 window.onbeforeunload = function () {
   window.scrollTo(0, 0);
