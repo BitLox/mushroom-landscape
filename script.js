@@ -54,7 +54,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (fadeOut) {
         if (!fadeStartTime) fadeStartTime = timestamp || performance.now();
         const elapsed = (timestamp || performance.now()) - fadeStartTime;
-        const progress = Math.min(elapsed / 1000, 1);
+        const progress = Math.min(elapsed / 3000, 1);
         particleAlpha = fadeFromAlpha * (1 - easeOutQuad(progress));
         if (progress >= 1) {
           particleAlpha = 0;
