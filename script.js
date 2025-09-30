@@ -18,6 +18,9 @@ gsap.set("#fstar", { y: -400 });
 gsap.set("#bird", { opacity: 0, x: -800, scaleX: 1, rotation: 0 });
 gsap.set("#mushroom", { opacity: 0, scale: 0, transformOrigin: "50% 100%", x: 198.5, y: 500 });
 gsap.set("#testing2", { opacity: 0 });
+// Set initial cloud opacity to ensure visibility on load
+gsap.set(["#cloudStart-L", "#cloudStart-R"], { opacity: 0.7 });
+
 // Particle effect code
 document.addEventListener('DOMContentLoaded', () => {
   let clickCount = 0;
@@ -194,18 +197,15 @@ document.addEventListener('DOMContentLoaded', () => {
   const bgMusic = document.querySelector('#bgMusic');
   if (musicToggle && bgMusic) {
     let isPlaying = false; // Global-ish for state preservation across modes
-
     mm.add({
       isMobile: "(max-width: 767px)",
       isDesktop: "(min-width: 768px)"
     }, (context) => {
       const { isMobile, isDesktop } = context.conditions;
       console.log(`Music toggle setup for ${isDesktop ? 'desktop' : 'mobile'}`);
-
       const musicPulse = gsap.timeline({ paused: true, repeat: -1 });
       musicPulse.to('#musicToggle', { scale: 1.2, duration: 0.5, ease: 'power2.out' })
-                .to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power2.in' });
-
+        .to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power2.in' });
       const onClick = () => {
         if (isPlaying) {
           bgMusic.pause();
@@ -222,7 +222,6 @@ document.addEventListener('DOMContentLoaded', () => {
           isPlaying = true;
         }
       };
-
       const onEnter = () => {
         if (!isPlaying) {
           gsap.to('#musicToggle', {
@@ -233,7 +232,6 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
       };
-
       const onLeave = () => {
         if (!isPlaying) {
           gsap.to('#musicToggle', {
@@ -244,11 +242,9 @@ document.addEventListener('DOMContentLoaded', () => {
           });
         }
       };
-
       musicToggle.addEventListener('click', onClick);
       musicToggle.addEventListener('mouseenter', onEnter);
       musicToggle.addEventListener('mouseleave', onLeave);
-
       // Restore state after mode switch (revert clears inline, so re-apply if playing)
       if (isPlaying) {
         musicPulse.play();
@@ -256,10 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         musicToggle.textContent = '🔇';
       }
-
       // Force a quick set to ensure base positioning
       gsap.set('#musicToggle', { clearProps: 'scale' }); // Clears any lingering scale, but pulse will override if playing
-
       // Cleanup function to remove listeners on mode change
       return () => {
         musicToggle.removeEventListener('click', onClick);
@@ -289,23 +283,43 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-});
-// Cloud drift animations
-const cloudDriftL = gsap.to("#cloudStart-L", {
-  x: 100,
-  duration: 10,
-  ease: "sine.inOut",
-  repeat: -1,
-  yoyo: true,
-  onStart: () => console.log('Cloud L drifting')
-});
-const cloudDriftR = gsap.to("#cloudStart-R", {
-  x: -100,
-  duration: 15,
-  ease: "sine.inOut",
-  repeat: -1,
-  yoyo: true,
-  onStart: () => console.log('Cloud R drifting')
+
+  // Cloud drift animations (moved inside for timing, removed opacity to avoid override)
+  const cloudDriftL = gsap.to("#cloudStart-L", {
+    x: 100,
+    duration: 10,
+    ease: "sine.inOut",
+    repeat: -1,
+    yoyo: true,
+    overwrite: false, // Lets scroll timeline override x/opacity when needed
+    onStart: () => console.log('Cloud L drifting')
+  });
+  const cloudDriftR = gsap.to("#cloudStart-R", {
+    x: -100,
+    duration: 15,
+    ease: "sine.inOut",
+    repeat: -1,
+    yoyo: true,
+    overwrite: false,
+    onStart: () => console.log('Cloud R drifting')
+  });
+
+  // Optional: Pause drifts when scrolled past the initial scene (uncomment if you want to stop animation off-screen)
+  /*
+  ScrollTrigger.create({
+    trigger: ".scrollElement",
+    start: "top top",
+    end: "100vh top", // Adjust to roughly match your scene1 scroll distance (~ first viewport or ~1143px if precise)
+    onLeave: () => {
+      cloudDriftL.pause();
+      cloudDriftR.pause();
+    },
+    onEnterBack: () => {
+      cloudDriftL.play();
+      cloudDriftR.play();
+    }
+  });
+  */
 });
 // Color-cycling timeline
 const tl = gsap.timeline({
