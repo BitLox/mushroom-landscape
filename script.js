@@ -1,10 +1,13 @@
 gsap.registerPlugin(ScrollTrigger);
+// Initialize matchMedia
+const mm = gsap.matchMedia();
+console.log('matchMedia initialized:', mm);
 // Initialize variables and settings
 let speed = 100;
 // Calculate height excluding #mushroom
-gsap.set("#mushroom", { display: "none" }); // Hide mushroom for bbox calc
+gsap.set("#mushroom", { display: "none" });
 let height = document.querySelector("svg").getBBox().height;
-gsap.set("#mushroom", { display: "block" }); // Restore mushroom
+gsap.set("#mushroom", { display: "block" });
 gsap.set("#h2-1", { opacity: 0, y: 500 });
 gsap.set("#h2-4", { opacity: 0, y: 500 });
 gsap.set("#h2-5", { opacity: 0, y: 500 });
@@ -13,10 +16,9 @@ gsap.set("#bg_grad", { attr: { cy: "-50" } });
 gsap.set("#scene3", { y: height - 40, visibility: "visible" });
 gsap.set("#fstar", { y: -400 });
 gsap.set("#bird", { opacity: 0, x: -800, scaleX: 1, rotation: 0 });
-gsap.set("#mushroom", { opacity: 0, scale: 0, transformOrigin: "50% 100%", x: 198.5, y: 500 }); // Start below screen
-gsap.set("#testing2", { opacity: 0 }); // Ensure testing2 is ready
-
-// Updated particle effect code with fixed global click-to-fade-out
+gsap.set("#mushroom", { opacity: 0, scale: 0, transformOrigin: "50% 100%", x: 198.5, y: 500 });
+gsap.set("#testing2", { opacity: 0 });
+// Particle effect code
 document.addEventListener('DOMContentLoaded', () => {
   let clickCount = 0;
   let particleAlpha = 0;
@@ -26,11 +28,9 @@ document.addEventListener('DOMContentLoaded', () => {
   let animationId = null;
   const particles = [];
   const canvas = document.querySelector('#particle-canvas');
-  
   if (canvas) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    
     // Generate 1500 particles
     for (let i = 0; i < 1500; i++) {
       particles.push({
@@ -42,19 +42,16 @@ document.addEventListener('DOMContentLoaded', () => {
         angle: Math.random() * Math.PI * 2,
       });
     }
-    
     // Quadratic ease-out function
     const easeOutQuad = (t) => t * (2 - t);
-    
     // Animation loop
     const animate = (timestamp) => {
       const ctx = canvas.getContext('2d');
-      
       // Handle fade out
       if (fadeOut) {
         if (!fadeStartTime) fadeStartTime = timestamp || performance.now();
         const elapsed = (timestamp || performance.now()) - fadeStartTime;
-        const progress = Math.min(elapsed / 1000, 1); // 1s fade
+        const progress = Math.min(elapsed / 1000, 1);
         particleAlpha = fadeFromAlpha * (1 - easeOutQuad(progress));
         if (progress >= 1) {
           particleAlpha = 0;
@@ -65,44 +62,49 @@ document.addEventListener('DOMContentLoaded', () => {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
           cancelAnimationFrame(animationId);
           animationId = null;
+          // Reset nav-menu styles in desktop mode
+          const navMenu = document.querySelector('.nav-menu');
+          if (window.innerWidth >= 768 && navMenu) {
+            navMenu.style.position = 'fixed';
+            navMenu.style.top = '0';
+            navMenu.style.left = '0';
+            navMenu.style.width = '100%';
+            navMenu.style.height = 'auto';
+            navMenu.style.padding = '10px';
+            navMenu.style.display = 'flex';
+            navMenu.style.pointerEvents = 'auto';
+            console.log('Nav menu styles reset after particle effect:', navMenu.style.cssText);
+          }
           return;
         }
       }
-      
       // Semi-transparent fill for trails
       ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
-      
       // Set alpha for particles
       ctx.globalAlpha = particleAlpha;
       particles.forEach((p) => {
-        // Random curve by adjusting angle
         p.angle += (Math.random() - 0.5) * 0.2;
         p.x += Math.cos(p.angle) * p.speed;
         p.y += Math.sin(p.angle) * p.speed;
-        
-        // Wrap around edges
         if (p.x < -p.radius) p.x = canvas.width + p.radius;
         if (p.x > canvas.width + p.radius) p.x = -p.radius;
         if (p.y < -p.radius) p.y = canvas.height + p.radius;
         if (p.y > canvas.height + p.radius) p.y = -p.radius;
-        
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fillStyle = p.color;
         ctx.fill();
       });
       ctx.globalAlpha = 1;
-      
       animationId = requestAnimationFrame(animate);
     };
-    
     // Click handler for #myco-trip
     const tripLink = document.getElementById('myco-trip');
     if (tripLink) {
       tripLink.addEventListener('click', (e) => {
-        e.preventDefault(); // Prevent default nav behavior
-        e.stopPropagation(); // Prevent this click from triggering global click handler
+        e.preventDefault();
+        e.stopPropagation();
         if (fadeOut) return;
         clickCount += 1;
         let targetAlpha;
@@ -122,21 +124,19 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     }
-    
-    // Global click handler to trigger fade-out when particles are active
+    // Global click handler to trigger fade-out
     document.addEventListener('click', (e) => {
+      if (e.target.closest('.nav-menu')) return;
       if (clickCount === 1 && particleAlpha > 0 && !fadeOut) {
         fadeOut = true;
         fadeStartTime = null;
         fadeFromAlpha = particleAlpha;
       }
     });
-    
     // Resize handler
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
-      // Reposition particles on resize
       particles.forEach((p) => {
         p.x = Math.random() * canvas.width;
         p.y = Math.random() * canvas.height;
@@ -144,122 +144,150 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     window.addEventListener('resize', handleResize);
   }
-});
-// ###############################
-// End updated particle effect code
-
-const mm = gsap.matchMedia();
-mm.add("(max-width: 1922px)", () => {
-  gsap.set(["#cloudStart-L", "#cloudStart-R"], { x: 10, opacity: 1 });
-});
-// Nav burger and music toggle
-document.addEventListener('DOMContentLoaded', () => {
-  const hamburger = document.querySelector('.hamburger');
-  const navMenu = document.querySelector('.nav-menu');
+  const bindHamburgerEvents = () => {
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const newHamburger = hamburger.cloneNode(true);
+    hamburger.parentNode.replaceChild(newHamburger, hamburger);
+    if (navMenu && newHamburger && window.innerWidth <= 767) {
+      newHamburger.addEventListener('click', () => {
+        newHamburger.classList.toggle('active');
+        navMenu.classList.toggle('active');
+        if (newHamburger.classList.contains('active')) {
+          gsap.to('.line:nth-child(1)', { y: 7, rotation: 45, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
+          gsap.to('.line:nth-child(2)', { opacity: 0, duration: 0.2, ease: 'power3.out' });
+          gsap.to('.line:nth-child(3)', { y: -7, rotation: -45, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
+          gsap.to('.nav-menu', { left: 0, duration: 0.5, ease: 'power3.out' });
+        } else {
+          gsap.to('.line:nth-child(1)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
+          gsap.to('.line:nth-child(2)', { opacity: 1, duration: 0.2, ease: 'power3.out' });
+          gsap.to('.line:nth-child(3)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
+          gsap.to('.nav-menu', { left: '-100%', duration: 0.4, ease: 'power3.in' });
+        }
+      });
+      newHamburger.addEventListener('mouseenter', () => {
+        gsap.to('.hamburger', { scale: 1.1, backgroundColor: 'rgba(0,0,0,0.7)', duration: 0.2, ease: 'power3.out' });
+      });
+      newHamburger.addEventListener('mouseleave', () => {
+        gsap.to('.hamburger', { scale: 1, backgroundColor: 'rgba(0,0,0,0.5)', duration: 0.2, ease: 'power3.out' });
+      });
+      const navLinks = document.querySelectorAll('.nav-menu a');
+      navLinks.forEach(link => {
+        link.removeEventListener('click', closeMenu);
+        link.addEventListener('click', closeMenu);
+      });
+      function closeMenu() {
+        newHamburger.classList.remove('active');
+        navMenu.classList.remove('active');
+        gsap.to('.line:nth-child(1)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
+        gsap.to('.line:nth-child(2)', { opacity: 1, duration: 0.2, ease: 'power3.out' });
+        gsap.to('.line:nth-child(3)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
+        gsap.to('.nav-menu', { left: '-100%', duration: 0.4, ease: 'power3.in' });
+      }
+    } else if (!newHamburger || !navMenu) {
+      console.warn('Hamburger or nav-menu not found in DOM');
+    }
+  };
+  bindHamburgerEvents();
+  window.addEventListener('resize', bindHamburgerEvents);
   const musicToggle = document.querySelector('#musicToggle');
   const bgMusic = document.querySelector('#bgMusic');
-  // Hamburger button and nav menu
-  if (hamburger && navMenu) {
-    hamburger.addEventListener('click', () => {
-      hamburger.classList.toggle('active');
-      navMenu.classList.toggle('active');
-      if (hamburger.classList.contains('active')) {
-        // Animate to "X"
-        gsap.to('.line:nth-child(1)', { y: 7, rotation: 45, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
-        gsap.to('.line:nth-child(2)', { opacity: 0, duration: 0.2, ease: 'power3.out' });
-        gsap.to('.line:nth-child(3)', { y: -7, rotation: -45, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
-        // Slide in menu
-        gsap.to('.nav-menu', { left: 0, duration: 0.5, ease: 'power3.out' });
-      } else {
-        // Animate back to hamburger
-        gsap.to('.line:nth-child(1)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
-        gsap.to('.line:nth-child(2)', { opacity: 1, duration: 0.2, ease: 'power3.out' });
-        gsap.to('.line:nth-child(3)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
-        // Slide out menu
-        gsap.to('.nav-menu', { left: '-100%', duration: 0.4, ease: 'power3.in' });
-      }
-    });
-    // Hamburger hover animation (needs fixing) test touch
-    hamburger.addEventListener('mouseenter', () => {
-      gsap.to('.hamburger', { scale: 1.1, backgroundColor: 'rgba(0,0,0,0.7)', duration: 0.2, ease: 'power3.out' });
-    });
-    hamburger.addEventListener('mouseleave', () => {
-      gsap.to('.hamburger', { scale: 1, backgroundColor: 'rgba(0,0,0,0.5)', duration: 0.2, ease: 'power3.out' });
-    });
-    // Close menu on link click
-    const navLinks = document.querySelectorAll('.nav-menu a');
-    navLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        navMenu.classList.remove('active');
-        // Animate back to hamburger
-        gsap.to('.line:nth-child(1)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
-        gsap.to('.line:nth-child(2)', { opacity: 1, duration: 0.2, ease: 'power3.out' });
-        gsap.to('.line:nth-child(3)', { y: 0, rotation: 0, transformOrigin: "50% 50%", duration: 0.3, ease: 'power3.out' });
-        // Slide out menu
-        gsap.to('.nav-menu', { left: '-100%', duration: 0.4, ease: 'power3.in' });
-      });
-    });
-  } else {
-    console.warn('Hamburger or nav-menu not found in DOM');
-  }
-  // Whitepaper Pop-up Logic
-  const whitepaperLink = document.getElementById('whitepaper-link');
-  const popup = document.getElementById('whitepaper-popup');
-  whitepaperLink.addEventListener('click', (e) => {
-    e.preventDefault(); // Prevent default link behavior
-    popup.classList.add('active');
-    document.body.style.overflow = 'hidden'; // Prevent background scrolling
-  });
-  // Close pop-up on any click
-  popup.addEventListener('click', () => {
-    popup.classList.remove('active');
-    document.body.style.overflow = ''; // Restore scrolling
-  });
-  // Optional: Close pop-up on Escape key
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && popup.classList.contains('active')) {
-      popup.classList.remove('active');
-      document.body.style.overflow = '';
-    }
-  });
-  // Music toggle and animation
   if (musicToggle && bgMusic) {
-    let isPlaying = false;
-    // Create GSAP timeline for music playing animation
-    const musicPulse = gsap.timeline({ paused: true, repeat: -1 });
-    musicPulse.to('#musicToggle', { scale: 1.2, duration: 0.5, ease: 'power2.out' })
-              .to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power2.in' });
-    // Toggle music and animation
-    musicToggle.addEventListener('click', () => {
+    let isPlaying = false; // Global-ish for state preservation across modes
+
+    mm.add({
+      isMobile: "(max-width: 767px)",
+      isDesktop: "(min-width: 768px)"
+    }, (context) => {
+      const { isMobile, isDesktop } = context.conditions;
+      console.log(`Music toggle setup for ${isDesktop ? 'desktop' : 'mobile'}`);
+
+      const musicPulse = gsap.timeline({ paused: true, repeat: -1 });
+      musicPulse.to('#musicToggle', { scale: 1.2, duration: 0.5, ease: 'power2.out' })
+                .to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power2.in' });
+
+      const onClick = () => {
+        if (isPlaying) {
+          bgMusic.pause();
+          musicPulse.pause();
+          gsap.to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power3.out' });
+          musicToggle.textContent = '🔇';
+          isPlaying = false;
+        } else {
+          bgMusic.play().catch((error) => {
+            console.warn('Audio play failed:', error);
+          });
+          musicPulse.play();
+          musicToggle.textContent = '🔊';
+          isPlaying = true;
+        }
+      };
+
+      const onEnter = () => {
+        if (!isPlaying) {
+          gsap.to('#musicToggle', {
+            scale: 1.1,
+            backgroundColor: 'rgba(0,0,0,0.7)',
+            duration: 0.2,
+            ease: 'power3.out'
+          });
+        }
+      };
+
+      const onLeave = () => {
+        if (!isPlaying) {
+          gsap.to('#musicToggle', {
+            scale: 1,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            duration: 0.2,
+            ease: 'power3.out'
+          });
+        }
+      };
+
+      musicToggle.addEventListener('click', onClick);
+      musicToggle.addEventListener('mouseenter', onEnter);
+      musicToggle.addEventListener('mouseleave', onLeave);
+
+      // Restore state after mode switch (revert clears inline, so re-apply if playing)
       if (isPlaying) {
-        bgMusic.pause();
-        musicPulse.pause();
-        gsap.to('#musicToggle', { scale: 1, duration: 0.2, ease: 'power3.out' }); // Reset scale
-        musicToggle.textContent = '🔇'; // Muted icon
-        isPlaying = false;
-      } else {
-        bgMusic.play().catch((error) => {
-          console.warn('Audio play failed:', error);
-        });
         musicPulse.play();
-        musicToggle.textContent = '🔊'; // Playing icon
-        isPlaying = true;
+        musicToggle.textContent = '🔊';
+      } else {
+        musicToggle.textContent = '🔇';
       }
-    });
-    // Music toggle hover animation (only when not playing)
-    musicToggle.addEventListener('mouseenter', () => {
-      if (!isPlaying) {
-        gsap.to('#musicToggle', { scale: 1.1, backgroundColor: 'rgba(0,0,0,0.7)', duration: 0.2, ease: 'power3.out' });
-      }
-    });
-    musicToggle.addEventListener('mouseleave', () => {
-      if (!isPlaying) {
-        gsap.to('#musicToggle', { scale: 1, backgroundColor: 'rgba(0,0,0,0.5)', duration: 0.2, ease: 'power3.out' });
-      }
+
+      // Force a quick set to ensure base positioning
+      gsap.set('#musicToggle', { clearProps: 'scale' }); // Clears any lingering scale, but pulse will override if playing
+
+      // Cleanup function to remove listeners on mode change
+      return () => {
+        musicToggle.removeEventListener('click', onClick);
+        musicToggle.removeEventListener('mouseenter', onEnter);
+        musicToggle.removeEventListener('mouseleave', onLeave);
+      };
     });
   } else {
     console.warn('musicToggle or bgMusic not found in DOM');
+  }
+  const whitepaperLink = document.getElementById('whitepaper-link');
+  const popup = document.getElementById('whitepaper-popup');
+  if (whitepaperLink && popup) {
+    whitepaperLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      popup.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    });
+    popup.addEventListener('click', () => {
+      popup.classList.remove('active');
+      document.body.style.overflow = '';
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && popup.classList.contains('active')) {
+        popup.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+    });
   }
 });
 // Cloud drift animations
@@ -319,7 +347,7 @@ ScrollTrigger.create({
   animation: mainTimeline,
   trigger: ".scrollElement",
   start: "top top",
-  end: "12000 bottom",
+  end: "8000 bottom",
   scrub: 1,
   markers: false,
   invalidateOnRefresh: true
@@ -401,10 +429,10 @@ mainTimeline.add("mushroomFade", 4);
 mainTimeline.to("#mushroom", { opacity: 0, duration: 0.75, onStart: () => console.log("Mushroom fading out!") }, "mushroomFade");
 mainTimeline.add("testing2Enter", 4.25);
 mainTimeline.fromTo("#testing2", { opacity: 0 }, { opacity: 1, y: -100, duration: 0.5, onStart: () => console.log("Testing2 animating!") }, "testing2Enter");
-mainTimeline.add("testing2Fade", 6.25);
+mainTimeline.add("testing2Fade", 5.25);
 mainTimeline.to("#testing2", { opacity: 0, duration: 0.75, onStart: () => console.log("Testing2 fading out!") }, "testing2Fade");
 // Transition (Scene 2 to Scene 3)
-mainTimeline.add("sceneTransition", 6.75);
+mainTimeline.add("sceneTransition", 5.5);
 mainTimeline.to("#h2-1", { y: -height - 100, scale: 1.5, transformOrigin: "50% 50%", duration: 1, onStart: () => console.log("Scene transition starting!") }, "sceneTransition");
 mainTimeline.to("#h2-2", { opacity: 0, y: -height - 100, duration: 1, ease: "power1.out" }, "sceneTransition");
 mainTimeline.to("#h2-3", { opacity: 0, y: -height - 100, duration: 1, ease: "power1.out" }, "sceneTransition");
@@ -414,7 +442,7 @@ mainTimeline.to("#h2-6", { opacity: 0, y: -height - 100, duration: 1, ease: "pow
 mainTimeline.to("#bg_grad", { attr: { cy: "-80" }, duration: 1 }, "sceneTransition");
 mainTimeline.to("#bg2", { y: 0, duration: 1 }, "sceneTransition");
 // Scene 3
-mainTimeline.add("scene3", 6.95);
+mainTimeline.add("scene3", 6);
 mainTimeline.fromTo("#h3-1", { y: 300 }, { y: -550, duration: 1, onStart: () => console.log("Scene 3 starting!") }, "scene3");
 mainTimeline.fromTo("#h3-2", { y: 800 }, { y: -550, duration: 1 }, "scene3+=0.03");
 mainTimeline.fromTo("#h3-3", { y: 600 }, { y: -550, duration: 1 }, "scene3+=0.06");
@@ -464,7 +492,7 @@ gsap.to("#bird", {
   }
 });
 // Falling star
-mainTimeline.add("fstar", 6.95);
+mainTimeline.add("fstar", 6);
 mainTimeline.set("#fstar", { opacity: 1 }, "fstar");
 mainTimeline.to("#fstar", { x: -700, y: -250, ease: "power2.out", duration: 1, onComplete: () => gsap.set("#fstar", { opacity: 0 }) }, "fstar");
 // Reset scrollbar on refresh

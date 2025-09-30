@@ -38,6 +38,7 @@ a[xlink\:href] * {
   width: 100%;
   top: 0;
   z-index: 4;
+  min-height: 8000px;
 }
 .btn {
   position: fixed;
@@ -109,9 +110,6 @@ a[xlink\:href] * {
 #mushroom {
   filter: drop-shadow(0 0 10px #1c79f3);
 }
-.scrollElement {
-  min-height: 12000px;
-}
 #x-logo {
   pointer-events: all;
   cursor: pointer;
@@ -129,34 +127,90 @@ a[xlink\:href] * {
 #bird {
   will-change: opacity;
 }
-#musicToggle {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  background: rgba(0,0,0,0.5);
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 50%;
-  cursor: pointer;
-  font-size: 16px;
-  z-index: 1000;
-  outline: none;
-  user-select: none;
-  transition: background 0.3s ease, transform 0.3s ease, opacity 0.3s ease; /* Added opacity */
+#particle-canvas {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none !important;
+  z-index: 3000 !important;
 }
-#musicToggle:hover {
-  background: rgba(0,0,0,0.7) !important; /* Ensure hover applies */
-  transform: scale(1.1);
-  opacity: 0.95; /* Subtle redraw trigger */
-}
-#musicToggle * {
-  pointer-events: auto; /* Ensure child elements don’t block hover */
-}
-#bgMusic {
+.popup {
   display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 30;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
 }
-/* Hamburger button */
+.popup.active {
+  display: flex;
+}
+.popup-content {
+  max-height: 80vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: 0.5rem;
+  padding: 1.5rem;
+  max-width: 48rem;
+  width: 100%;
+  scrollbar-width: thin;
+  scrollbar-color: #6b7280 #e5e7eb;
+}
+.popup-content::-webkit-scrollbar {
+  width: 8px;
+}
+.popup-content::-webkit-scrollbar-track {
+  background: #e5e7eb;
+}
+.popup-content::-webkit-scrollbar-thumb {
+  background: #6b7280;
+  border-radius: 4px;
+}
+.table-container {
+  overflow-x: auto;
+}
+.nav-menu {
+  position: fixed;
+  top: 0;
+  left: -100% !important;
+  width: 195px;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  padding: 80px 20px 20px;
+  z-index: 1999;
+  pointer-events: none;
+  transition: left 0.3s ease;
+}
+.nav-menu.active {
+  left: 0 !important;
+  pointer-events: auto !important;
+}
+.nav-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+.nav-menu li {
+  margin: 20px 0;
+}
+.nav-menu a {
+  color: white;
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-family: 'Orbitron', sans-serif;
+  transition: color 0.3s ease;
+}
+.nav-menu a:hover {
+  color: #00ff88;
+}
 .hamburger {
   position: fixed;
   top: 20px;
@@ -175,7 +229,6 @@ a[xlink\:href] * {
   padding: 8px;
   transition: background 0.3s ease, transform 0.3s ease;
 }
-/* Hamburger lines  2 or 3 touch test */
 .hamburger .line {
   width: 18px;
   height: 2px;
@@ -184,96 +237,107 @@ a[xlink\:href] * {
   border-radius: 2px;
   transform-origin: center;
 }
-/* Hover effect */
 .hamburger:hover {
   background: rgba(0,0,0,0.7);
   transform: scale(1.1);
 }
-/* Navigation menu */
-.nav-menu {
+#musicToggle {
   position: fixed;
-  top: 0;
-  left: -100%;
-  width: 195px; /* Your updated width */
-  height: 100vh;
+  top: 20px;
+  right: 20px;
+  width: 36px;
+  height: 36px;
   background: rgba(0,0,0,0.5);
-  padding: 80px 20px 20px;
-  z-index: 1999;
-  pointer-events: none;
-  transition: left 0.3s ease;
-}
-.nav-menu.active {
-  left: 0;
-  pointer-events: auto;
-  overflow-y: auto;
-}
-.nav-menu ul {
-  list-style: none;
-  padding: 0;
-}
-.nav-menu li {
-  margin: 20px 0;
-}
-.nav-menu a {
   color: white;
-  text-decoration: none;
-  font-size: 1.2rem;
-  transition: color 0.3s ease;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  font-family: sans-serif;
+  z-index: 2001;
+  outline: none;
+  user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  line-height: 36px;
+  transform-origin: 50% 50%;
+  transition: background 0.3s ease, opacity 0.3s ease;
 }
-.nav-menu a:hover {
-  color: #00ff88;
+#musicToggle:hover {
+  background: rgba(0,0,0,0.7);
+  opacity: 0.95;
 }
-
-/* Pop-up Styling */
-    .popup {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 30;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem;
-    }
-    .popup.active {
-      display: flex;
-    }
-    .popup-content {
-      max-height: 80vh;
-      overflow-y: auto;
-      background: #fff;
-      border-radius: 0.5rem;
-      padding: 1.5rem;
-      max-width: 48rem;
-      width: 100%;
-      scrollbar-width: thin;
-      scrollbar-color: #6b7280 #e5e7eb;
-    }
-    .popup-content::-webkit-scrollbar {
-      width: 8px;
-    }
-    .popup-content::-webkit-scrollbar-track {
-      background: #e5e7eb;
-    }
-    .popup-content::-webkit-scrollbar-thumb {
-      background: #6b7280;
-      border-radius: 4px;
-    }
-    .table-container {
-      overflow-x: auto;
-    }
-
-#particle-canvas {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  pointer-events: none !important;
-  z-index: 3000 !important;
+#musicToggle * {
+  pointer-events: auto;
 }
 
-/* MARK: ---0-490 Mobile */
+#bgMusic {
+  display: none;
+}
+@media (min-width: 768px) {
+  .nav-menu {
+    position: fixed;
+    top: 0;
+    left: 0 !important;
+    width: 100%;
+    height: auto;
+    padding: 10px;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: flex-start;
+    pointer-events: auto !important;
+    z-index: 1999;
+  }
+  .nav-menu.active {
+    left: 0;
+  }
+  .nav-menu ul {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 30px;
+    padding-left: 10px;
+  }
+  .nav-menu li {
+    margin: 0;
+  }
+  .nav-menu a {
+    font-size: 1rem;
+    font-family: 'Orbitron', sans-serif;
+  }
+  .hamburger {
+    display: none;
+  }
+  #musicToggle {
+    position: absolute;
+    top: 50%;
+    right: 40px;
+    width: 36px;
+    height: 36px;
+    transform: translateY(-50%);
+    transform-origin: 50% 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: 36px;
+    z-index: 2001;
+    font-family: sans-serif;
+  }
+}
+@media (max-width: 767px) {
+  .nav-menu {
+    left: -100% !important;
+  }
+  .nav-menu.active {
+    left: 0 !important;
+  }
+  #musicToggle {
+    pointer-events: auto !important;
+  }
+}
 @media (max-width: 490px) {
   #text1, #text2top, #text3, #text4, #text5, #text6, #text7, #text8, #text9, #text10, #text11, #text12, #text13, #arrow {
     transform-origin: 50% 90%;
