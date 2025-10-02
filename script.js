@@ -419,8 +419,14 @@ mm.add({
     "#mushroom",
     { opacity: 0, scale: 0, y: 500 },
     {
-      opacity: 1,
-      scale: isMobile ? 0.6 : 0.8,
+      // opacity: 1,
+      // scale: isMobile ? 0.6 : 0.8,
+      // y: 40,
+      // x: 198.5,
+      // duration: 1,
+      // onStart: () => console.log("Mushroom animating!")
+      opacity: 0.7,
+      scale: isMobile ? 0.6 : 0.6,
       y: 40,
       x: 198.5,
       duration: 1,
