@@ -179,7 +179,7 @@ a[xlink\:href] * {
   left: -100% !important;
   width: 220px;
   height: 100vh;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0,0,0,0.8);
   padding: 75px 20px 20px;
   z-index: 1999;
   pointer-events: none;
@@ -286,7 +286,7 @@ a[xlink\:href] * {
     width: 100%;
     height: auto;
     padding: 10px;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.8);
     display: flex;
     justify-content: flex-start;
     pointer-events: auto !important;
