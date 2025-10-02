@@ -15,6 +15,7 @@ gsap.set("#h2-6", { opacity: 0, y: 500 });
 gsap.set("#bg_grad", { attr: { cy: "-50" } });
 gsap.set("#scene3", { y: height - 40, visibility: "visible" });
 gsap.set("#fstar", { y: -400 });
+gsap.set("#info", { y: -50 });
 gsap.set("#bird", { opacity: 0, x: -800, scaleX: 1, rotation: 0 });
 gsap.set("#mushroom", { opacity: 0, scale: 0, transformOrigin: "50% 100%", x: 198.5, y: 500 });
 gsap.set("#testing2", { opacity: 0 });
@@ -390,7 +391,7 @@ mainTimeline.to("#cloud3", { x: -1000, duration: 1 }, "scene1");
 mainTimeline.to("#cloud4", { x: -700, y: 25, duration: 1 }, "scene1");
 // Sun motion and background
 mainTimeline.add("sunStart", 0.06);
-mainTimeline.fromTo("#bg_grad", { attr: { cy: "-50" } }, { attr: { cy: "330" }, duration: 1 }, "sunStart");
+mainTimeline.fromTo("#bg_grad", { attr: { cy: "-300" } }, { attr: { cy: "330" }, duration: 1 }, "sunStart");
 mainTimeline.to("#bg_grad stop:nth-child(2)", { attr: { offset: "0.15" }, duration: 1 }, "sunStart");
 mainTimeline.to("#bg_grad stop:nth-child(3)", { attr: { offset: "0.18" }, duration: 1 }, "sunStart");
 mainTimeline.to("#bg_grad stop:nth-child(4)", { attr: { offset: "0.25" }, duration: 1 }, "sunStart");
