@@ -16,6 +16,7 @@ gsap.set("#bg_grad", { attr: { cy: "-50" } });
 gsap.set("#scene3", { y: height - 40, visibility: "visible" });
 gsap.set("#fstar", { y: -400 });
 gsap.set("#info", { y: -50 });
+gsap.set("#cloudStart-R", { y: -20 });
 gsap.set("#bird", { opacity: 0, x: -800, scaleX: 1, rotation: 0 });
 gsap.set("#mushroom", { opacity: 0, scale: 0, transformOrigin: "50% 100%", x: 198.5, y: 500 });
 gsap.set("#testing2", { opacity: 0 });
