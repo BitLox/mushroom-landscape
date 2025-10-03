@@ -73,9 +73,21 @@
             <!-- Extended corona that shows on page load -->
             <stop offset="0.0" stop-color="#FFE700" />
             <!-- Sky base color -->
-            <!-- <stop offset="0.8" stop-color="#87CEEB" /> -->
-            <stop offset="0.8" stop-color="#0086BE" />
+            <!-- <stop offset="0.8" stop-color="#0086BE" /> -->
           </radialGradient>
+          <linearGradient
+            id="sky_linear"
+            x1="0" y1="0"
+            x2="0" y2="1"
+            gradientUnits="objectBoundingBox"
+          >
+            <!-- Darker blue at top -->
+            <stop offset="0" stop-color="#0086BE" />
+            <!-- Optional mid-stop for smoother fade if you want more nuance -->
+            <!-- <stop offset="0.5" stop-color="#4DA8DA" /> -->
+            <!-- Lighter blue at bottom -->
+            <stop offset="1" stop-color="#87CEEB" />
+          </linearGradient>
           <linearGradient
             id="grad2"
             x1="242.5"
@@ -307,8 +319,17 @@
           width="750"
           height="500"
           opacity="0.8"
-          fill="url(#bg_grad)"
+          fill="url(#sky_linear)"
         />
+        <!-- <rect 
+          id="sun_bg" 
+          width="800" 
+          height="400" 
+          fill="url(#bg_grad)" 
+          x="-25" 
+          y="-200" 
+          opacity="0.8" 
+        /> -->
 
         <g id="clouds" fill="#fefefe">
           <path
