@@ -29,6 +29,7 @@ svg {
   left: 0;
   pointer-events: none;
 }
+
 a[xlink\:href] * {
   pointer-events: auto;
 }
