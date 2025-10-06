@@ -435,7 +435,7 @@ mainTimeline.fromTo(
     {
 opacity: 1,
 scale: 0.65,
-duration: 1,
+duration: 1.8,
 ease: "power2.out",
 onStart: () => console.log("Mushroom fading in full-sized!")
     },
