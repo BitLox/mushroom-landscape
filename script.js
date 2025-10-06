@@ -8,6 +8,16 @@ let speed = 100;
 gsap.set("#mushroom", { display: "none" });
 let height = document.querySelector("svg").getBBox().height;
 gsap.set("#mushroom", { display: "block" });
+
+// Dynamic centering for mushroom
+const mushroom = document.querySelector("#mushroom");
+const bbox = mushroom.getBBox();
+const canvasWidth = 750;
+const canvasHeight = 500;
+const centerX = (canvasWidth / 2) - (bbox.width / 2);
+const centerY = (canvasHeight / 2) - (bbox.height / 2);
+gsap.set("#mushroom", { opacity: 0, scale: 0, transformOrigin: "50% 50%", x: centerX, y: centerY });
+
 gsap.set("#h2-1", { opacity: 0, y: 500 });
 gsap.set("#h2-4", { opacity: 0, y: 500 });
 gsap.set("#h2-5", { opacity: 0, y: 500 });
@@ -17,8 +27,8 @@ gsap.set("#scene3", { y: height - 40, visibility: "visible" });
 gsap.set("#fstar", { y: -400 });
 gsap.set("#info", { y: -50 });
 gsap.set("#cloudStart-R", { y: -20 });
+gsap.set("#cloudStart-L", { y: 0 });
 gsap.set("#bird", { opacity: 0, x: -800, scaleX: 1, rotation: 0 });
-gsap.set("#mushroom", { opacity: 0, scale: 0, transformOrigin: "50% 100%", x: 198.5, y: 500 });
 gsap.set("#testing2", { opacity: 0 });
 // Set initial cloud opacity to ensure visibility on load
 gsap.set(["#cloudStart-L", "#cloudStart-R"], { opacity: 0.7 });
@@ -421,26 +431,17 @@ const { isMobile, isDesktop } = context.conditions;
 console.log("Mushroom animation added at sunIncrease, Mobile:", isMobile, "Desktop:", isDesktop);
 mainTimeline.fromTo(
 "#mushroom",
-    { opacity: 0, scale: 0, y: 500 },
+    { opacity: 0, scale: 0 },
     {
-// opacity: 1,
-// scale: isMobile ? 0.6 : 0.8,
-// y: 40,
-// x: 198.5,
-// duration: 1,
-// onStart: () => console.log("Mushroom animating!")
-opacity: 0.7,
-scale: isMobile ? 0.6 : 0.6,
-y: 40,
-x: 198.5,
+opacity: 1,
+scale: 0.65,
 duration: 1,
-onStart: () => console.log("Mushroom animating!")
+ease: "power2.out",
+onStart: () => console.log("Mushroom fading in full-sized!")
     },
 "sunIncrease"
   );
 });
-
-
 // Sun increase
 mainTimeline.add("sunIncrease", 2);
 mainTimeline.to("#scene2_text_a", { opacity: 0, x: -800, duration: 1 }, "sunIncrease+=0.1");
@@ -451,10 +452,19 @@ mainTimeline.to("#scene2_text_d", { opacity: 0, x: 800, duration: 1 }, "sunIncre
 mainTimeline.to("#sky_linear stop:nth-child(2)", { attr: { "stop-color": "#45224A" }, duration: 1 }, "sunIncrease");
 mainTimeline.to("#lg4 stop:nth-child(1)", { attr: { "stop-color": "#623951" }, duration: 1 }, "sunIncrease");
 mainTimeline.to("#lg4 stop:nth-child(2)", { attr: { "stop-color": "#261F36" }, duration: 1 }, "sunIncrease");
-mainTimeline.add("mushroomFade", 4);
-mainTimeline.to("#mushroom", { opacity: 0, duration: 0.75, onStart: () => console.log("Mushroom fading out!") }, "mushroomFade");
+mainTimeline.add("mushroomFade", 4); // Hover pause ends here, but no fade—just holds
 mainTimeline.add("testing2Enter", 4.25);
 mainTimeline.fromTo("#testing2", { opacity: 0 }, { opacity: 1, y: -100, duration: 0.5, onStart: () => console.log("Testing2 animating!") }, "testing2Enter");
+// Mushroom quick shrink/dart synced to text enter (relative from center)
+mainTimeline.to("#mushroom", { 
+  scale: 0.3, 
+  //x: "+=75",  // Gentle right nudge from center
+  y: "+=150", // Mild down drop
+  opacity: 0, 
+  duration: 0.5, 
+  ease: "power2.inOut",
+  onStart: () => console.log("Mushroom shrinking and darting away!")
+}, "testing2Enter");
 mainTimeline.add("testing2Fade", 5.25);
 mainTimeline.to("#testing2", { opacity: 0, duration: 0.75, onStart: () => console.log("Testing2 fading out!") }, "testing2Fade");
 // Transition (Scene 2 to Scene 3)
