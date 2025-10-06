@@ -393,7 +393,7 @@ mainTimeline.to("#cloudStart-R", { x: 300, opacity: 0, duration: 1, ease: "power
 mainTimeline.to("#info", { y: 8 * speed, duration: 1 }, "scene1");
 mainTimeline.set(["#cloudStart-L", "#cloudStart-R"], { opacity: 0 }, "scene1+=1");
 // Clouds
-mainTimeline.to("#cloud1", { x: 500, duration: 1 }, "scene1");
+mainTimeline.to("#cloud1", { x: 700, duration: 1 }, "scene1");
 mainTimeline.to("#cloud2", { x: 1000, duration: 1 }, "scene1");
 mainTimeline.to("#cloud3", { x: -1000, duration: 1 }, "scene1");
 mainTimeline.to("#cloud4", { x: -700, y: 25, duration: 1 }, "scene1");
