@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <title>MUSHROOM MAGIC</title>
     <link rel="icon" type="image/x-icon" href="images/favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicon.ico">
+    <!-- <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png"> -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -88,6 +89,27 @@
             <!-- Lighter blue at bottom -->
             <stop offset="0.6" stop-color="#87CEEB" />
           </linearGradient>
+
+          <radialGradient
+            id="halo_grad"
+            cx="50%" cy="50%"
+            r="50%"
+            gradientUnits="userSpaceOnUse"
+          >
+            <stop offset="0" stop-color="#FFF" stop-opacity="0.8" />
+            <stop offset="0.5" stop-color="#FFD700" stop-opacity="0.5" />
+            <stop offset="1" stop-color="#FFF" stop-opacity="0" />
+          </radialGradient>
+
+          <linearGradient id="rainbow_grad" x1="0%" y1="0%" x2="100%" y2="100%" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00FFFF" /> <!-- Bright aqua -->
+            <stop offset="20%" stop-color="#9932CC" /> <!-- Deep purple -->
+            <stop offset="40%" stop-color="#FF69B4" /> <!-- Hot pink -->
+            <stop offset="60%" stop-color="#FFA500" /> <!-- Fiery orange -->
+            <stop offset="80%" stop-color="#00FFFF" /> <!-- Back to aqua for loop -->
+            <stop offset="100%" stop-color="#9932CC" /> <!-- Fade to purple -->
+          </linearGradient>
+
           <linearGradient
             id="grad2"
             x1="242.5"
@@ -360,16 +382,18 @@
 
         <!-- SCENE 2 -->
         <g id="scene2">
-        <image
-            id="mushroom"
-            xlink:href="images/mushroom.png"
-            width="353"
-            height="384"
-            preserveAspectRatio="xMidYMid meet"
-        />      
+        <!-- Outer halo circle (rainbow stroke, animated rotation) -->
+        <circle id="halo_outer" cx="0" cy="0" r="0" stroke="url(#rainbow_grad)" fill="none" stroke-width="8" opacity="0" />
+          <image
+              id="mushroom"
+              xlink:href="images/mushroom.png"
+              width="353"
+              height="384"
+              preserveAspectRatio="xMidYMid meet"
+          />
           <text
             class="snazzy-svg-text1"
-            id="testing2"
+            id="findAndEatYou"
             x="50%"
             y="300"
             text-anchor="middle"
@@ -1033,11 +1057,7 @@
     </div>
   </div>
 
-    <!-- <a href="https://isladjan.com/about/" target="_blank" class="btn btn_works">My Works</a>
-<a href="https://isladjan.com/work/2/" target="_blank" class="btn btn_version">New Version</a> -->
-    <!-- <a class="btn" id="fullscr">Go Fullscreen</a> -->
-    <!-- partial -->
-<script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3/dist/gsap.min.js"></script>
 <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
 <script src="./script.js"></script>
 <!-- Hidden audio element for background music -->

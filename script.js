@@ -1,4 +1,5 @@
 gsap.registerPlugin(ScrollTrigger);
+
 // Initialize matchMedia
 const mm = gsap.matchMedia();
 console.log("matchMedia initialized:", mm);
@@ -22,6 +23,16 @@ gsap.set("#mushroom", {
   x: centerX,
   y: centerY,
 });
+
+// Center and size the halo circles too
+const haloRadius = bbox.width / 2.8; // Or tweak to bbox.height / 2 if it's taller
+gsap.set("#halo_outer", {
+  cx: centerX + 176,
+  cy: centerY + 192,
+  r: 0,
+  opacity: 0,
+});
+
 gsap.set("#h2-1", { opacity: 0, y: 500 });
 gsap.set("#h2-4", { opacity: 0, y: 500 });
 gsap.set("#h2-5", { opacity: 0, y: 500 });
@@ -33,22 +44,25 @@ gsap.set("#info", { y: -50 });
 gsap.set("#cloudStart-R", { y: 10 });
 gsap.set("#cloudStart-L", { y: 0 });
 gsap.set("#bird", { opacity: 0, x: -800, scaleX: 1, rotation: 0 });
-gsap.set("#testing2", { opacity: 0 });
+gsap.set("#findAndEatYou", { opacity: 0 });
 
 // Set initial cloud opacity to ensure visibility on load
 gsap.set(["#cloudStart-L", "#cloudStart-R"], { opacity: 0.7 });
 
 // Desktop-only cloud y adjustment to prevent nav clip on wide screens
-mm.add({
-  isDesktop: "(min-width: 1068px)"
-}, (context) => {
-  const { isDesktop } = context.conditions;
-  if (isDesktop) {
-    gsap.set("#cloudStart-R", { y: 40 });
-    gsap.set("#cloudStart-L", { y: 30 });
+mm.add(
+  {
+    isDesktop: "(min-width: 1068px)",
+  },
+  (context) => {
+    const { isDesktop } = context.conditions;
+    if (isDesktop) {
+      gsap.set("#cloudStart-R", { y: 40 });
+      gsap.set("#cloudStart-L", { y: 30 });
+    }
+    return () => {}; // Cleanup if needed
   }
-  return () => {}; // Cleanup if needed
-});
+);
 
 // Particle effect code
 document.addEventListener("DOMContentLoaded", () => {
@@ -456,7 +470,7 @@ const selectors = [
   "#scene2_text_a",
   "#scene2_text_b",
   "#scene2_text_c",
-  "#testing2",
+  "#findAndEatYou",
   "#scene3_text",
 ];
 selectors.forEach((selector, index) => {
@@ -613,7 +627,6 @@ mainTimeline.to(
     y: 4.5 * speed,
     x: -0.2 * speed,
     duration: 1,
-    modifier: { y: (y) => Math.max(y, -20) },
   },
   "scene1"
 );
@@ -623,7 +636,6 @@ mainTimeline.to(
     y: 4.5 * speed,
     x: -0.2 * speed,
     duration: 1,
-    modifier: { y: (y) => Math.max(y, -20) },
   },
   "scene1"
 );
@@ -649,7 +661,7 @@ mainTimeline.to("#cloud2", { x: 1000, duration: 1 }, "scene1");
 mainTimeline.to("#cloud3", { x: -1000, duration: 1 }, "scene1");
 mainTimeline.to(
   "#cloud4",
-  { x: -700, y: 25, duration: 1, modifier: { y: (y) => Math.max(y, -20) } },
+  { x: -700, y: 25, duration: 1, modifiers: { y: (y) => Math.max(y, -20) } },
   "scene1"
 );
 // Sun motion and background (sky shift instead of cy)
@@ -758,18 +770,50 @@ mm.add(
       "Desktop:",
       isDesktop
     );
-    mainTimeline.fromTo(
-      "#mushroom",
-      { opacity: 0, scale: 0 },
-      {
-        opacity: 1,
-        scale: 0.65,
-        duration: 1.8,
-        ease: "power2.out",
-        onStart: () => console.log("Mushroom fading in full-sized!"),
-      },
-      "sunIncrease"
-    );
+    mainTimeline
+      .fromTo(
+        "#mushroom",
+        { opacity: 0, scale: 0 },
+        {
+          opacity: 1,
+          scale: 0.55,
+          duration: 1.8,
+          ease: "power2.out",
+          onStart: () => console.log("Mushroom fading in full-sized!"),
+        },
+        "sunIncrease"
+      )
+      .fromTo(
+        "#halo_outer",
+        { r: 0, opacity: 0, strokeWidth: 0 },
+        {
+          r: haloRadius * 0.9,
+          opacity: 1,
+          strokeWidth: 6,
+          duration: 1.8,
+          ease: "power2.out",
+          onComplete: () => {
+            // Fire the swirl on halo complete (100 cycles for long hypnotic loop)
+            gsap.to("#rainbow_grad", {
+              duration: 2, // Per cycle—slower for visible color chase
+              ease: "none",
+              repeat: 99, // 100 total cycles (initial + 99 repeats)
+              onUpdate: function () {
+                const progress = this.progress();
+                const rotation = 360 * progress;
+                document
+                  .querySelector("#rainbow_grad")
+                  .setAttribute(
+                    "gradientTransform",
+                    `rotate(${rotation} 200 200)`
+                  ); // Adjust 200 200 to your SVG center if needed
+              },
+              onStart: () => console.log("Gradient swirl started on complete!"),
+            });
+          },
+        },
+        "sunIncrease"
+      );
   }
 );
 // Sun increase
@@ -811,21 +855,21 @@ mainTimeline.to(
   "sunIncrease"
 );
 mainTimeline.add("mushroomFade", 4); // Hover pause ends here, but no fade—just holds
-mainTimeline.add("testing2Enter", 4.25);
+mainTimeline.add("findAndEatEnter", 6.25);
 mainTimeline.fromTo(
-  "#testing2",
+  "#findAndEatYou",
   { opacity: 0 },
   {
     opacity: 1,
     y: -100,
     duration: 0.5,
-    onStart: () => console.log("Testing2 animating!"),
+    onStart: () => console.log("findAndEatYou animating!"),
   },
-  "testing2Enter"
+  "findAndEatEnter"
 );
 // Mushroom quick shrink/dart synced to text enter (relative from center)
 mainTimeline.to(
-  "#mushroom",
+  "#halo_outer, #mushroom",
   {
     scale: 0.3,
     //x: "+=75", // Gentle right nudge from center
@@ -835,20 +879,20 @@ mainTimeline.to(
     ease: "power2.inOut",
     onStart: () => console.log("Mushroom shrinking and darting away!"),
   },
-  "testing2Enter"
+  "findAndEatEnter"
 );
-mainTimeline.add("testing2Fade", 5.25);
+mainTimeline.add("findAndEatFade", 7.25);
 mainTimeline.to(
-  "#testing2",
+  "#findAndEatYou",
   {
     opacity: 0,
     duration: 0.75,
-    onStart: () => console.log("Testing2 fading out!"),
+    onStart: () => console.log("findAndEatYou fading out!"),
   },
-  "testing2Fade"
+  "findAndEatFade"
 );
 // Transition (Scene 2 to Scene 3)
-mainTimeline.add("sceneTransition", 5.5);
+mainTimeline.add("sceneTransition", 7.5);
 mainTimeline.to(
   "#h2-1",
   {
@@ -893,7 +937,7 @@ mainTimeline.to(
 );
 mainTimeline.to("#bg2", { y: 0, duration: 1 }, "sceneTransition");
 // Scene 3
-mainTimeline.add("scene3", 6);
+mainTimeline.add("scene3", 8);
 mainTimeline.fromTo(
   "#h3-1",
   { y: 300 },
@@ -983,7 +1027,7 @@ gsap.to("#bird", {
   },
 });
 // Falling star
-mainTimeline.add("fstar", 6);
+mainTimeline.add("fstar", 8.1);
 mainTimeline.set("#fstar", { opacity: 1 }, "fstar");
 mainTimeline.to(
   "#fstar",
