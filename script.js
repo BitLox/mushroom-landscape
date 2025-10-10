@@ -39,7 +39,7 @@ gsap.set("#h2-5", { opacity: 0, y: 500 });
 gsap.set("#h2-6", { opacity: 0, y: 500 });
 // gsap.set("#bg_grad", { attr: { cy: "-50" } }); // Removed - using linear now
 gsap.set("#scene3", { y: height - 40, visibility: "visible" });
-gsap.set("#fstar", { y: -400 });
+gsap.set("#fstar", { y: -550 });
 gsap.set("#info", { y: -50 });
 gsap.set("#cloudStart-R", { y: 10 });
 gsap.set("#cloudStart-L", { y: 0 });
@@ -1038,13 +1038,13 @@ gsap.to("#bird", {
   },
 });
 // Falling star
-mainTimeline.add("fstar", 8.1);
+mainTimeline.add("fstar", 9.6);
 mainTimeline.set("#fstar", { opacity: 1 }, "fstar");
 mainTimeline.to(
   "#fstar",
   {
-    x: -700,
-    y: -250,
+    x: -800,
+    y: -375,
     ease: "power2.out",
     duration: 1,
     onComplete: () => gsap.set("#fstar", { opacity: 0 }),
