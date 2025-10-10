@@ -1,4 +1,4 @@
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 // Initialize matchMedia
 const mm = gsap.matchMedia();
@@ -310,6 +310,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
   bindHamburgerEvents();
+
+// Get Involved scroll handler
+const involvedLink = document.getElementById('involved');
+if (involvedLink) {
+  involvedLink.addEventListener('click', (e) => {
+    e.preventDefault();
+    gsap.to(window, { scrollTo: "max", duration: 1 });
+  });
+}
+
   window.addEventListener("resize", bindHamburgerEvents);
   const musicToggle = document.querySelector("#musicToggle");
   const bgMusic = document.querySelector("#bgMusic");
