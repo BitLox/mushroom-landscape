@@ -456,20 +456,21 @@ const tl = gsap.timeline({
 const colors = [
   "#ff0000",
   "#00ff00",
-  "#0000ff",
-  "#ff00ff",
-  "#00ffff",
+  "#ff00eeff",
+  "#ff0026ff",
+  "#0044ffff",
   "#ff4500",
-  "#9932cc",
-  "#00ced1",
-  "#ff69b4",
-  "#4682b4",
+  "#aa00ffff",
+  "#ddff00ff",
+  "#fb007dff",
+  "#1aff00ff",
 ];
 const selectors = [
   "#info",
   "#scene2_text_a",
   "#scene2_text_b",
   "#scene2_text_c",
+  "#scene2_text_d",
   "#findAndEatYou",
   "#scene3_text",
 ];
@@ -881,7 +882,7 @@ mainTimeline.to(
   },
   "findAndEatEnter"
 );
-mainTimeline.add("findAndEatFade", 7.25);
+mainTimeline.add("findAndEatFade", 8.25);
 mainTimeline.to(
   "#findAndEatYou",
   {
@@ -892,7 +893,7 @@ mainTimeline.to(
   "findAndEatFade"
 );
 // Transition (Scene 2 to Scene 3)
-mainTimeline.add("sceneTransition", 7.5);
+mainTimeline.add("sceneTransition", 8.5);
 mainTimeline.to(
   "#h2-1",
   {
@@ -937,7 +938,7 @@ mainTimeline.to(
 );
 mainTimeline.to("#bg2", { y: 0, duration: 1 }, "sceneTransition");
 // Scene 3
-mainTimeline.add("scene3", 8);
+mainTimeline.add("scene3", 8.7);
 mainTimeline.fromTo(
   "#h3-1",
   { y: 300 },
