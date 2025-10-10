@@ -21,14 +21,14 @@ gsap.set("#mushroom", {
   scale: 0,
   transformOrigin: "50% 50%",
   x: centerX,
-  y: centerY,
+  y: centerY - 20,
 });
 
 // Center and size the halo circles too
 const haloRadius = bbox.width / 2.8; // Or tweak to bbox.height / 2 if it's taller
 gsap.set("#halo_outer", {
   cx: centerX + 176,
-  cy: centerY + 192,
+  cy: centerY + 172,
   r: 0,
   opacity: 0,
 });
@@ -44,6 +44,7 @@ gsap.set("#info", { y: -50 });
 gsap.set("#cloudStart-R", { y: 10 });
 gsap.set("#cloudStart-L", { y: 0 });
 gsap.set("#bird", { opacity: 0, x: -800, scaleX: 1, rotation: 0 });
+// gsap.set("#birdy", { opacity: 0, x: -800, scaleX: 1, rotation: 0 });
 gsap.set("#findAndEatYou", { opacity: 0 });
 
 // Set initial cloud opacity to ensure visibility on load
@@ -1028,8 +1029,8 @@ gsap.to("#bird", {
   duration: 1,
   scrollTrigger: {
     trigger: ".scrollElement",
-    start: "15% top",
-    end: "30% top",
+    start: "4% top",
+    end: "15% top",
     scrub: 1,
     onEnter: () => gsap.set("#bird", { opacity: 1 }),
     onLeave: () => gsap.set("#bird", { opacity: 0 }),
@@ -1037,6 +1038,24 @@ gsap.to("#bird", {
     onLeaveBack: () => gsap.set("#bird", { opacity: 0 }),
   },
 });
+
+// Alternate bird
+// mainTimeline.add("birdy", 8.6);
+// mainTimeline.set("#birdy", { opacity: 1 }, "birdy");
+// mainTimeline.to(
+//   "#birdy",
+//   {
+//     x: -800,
+//     y: -375,
+//     ease: "power2.out",
+//     duration: 1,
+//     onComplete: () => gsap.set("#birdy", { opacity: 0 }),
+//   },
+//   "birdy"
+// );
+
+
+
 // Falling star
 mainTimeline.add("fstar", 9.6);
 mainTimeline.set("#fstar", { opacity: 1 }, "fstar");
