@@ -1039,22 +1039,6 @@ gsap.to("#bird", {
   },
 });
 
-// Alternate bird
-// mainTimeline.add("birdy", 8.6);
-// mainTimeline.set("#birdy", { opacity: 1 }, "birdy");
-// mainTimeline.to(
-//   "#birdy",
-//   {
-//     x: -800,
-//     y: -375,
-//     ease: "power2.out",
-//     duration: 1,
-//     onComplete: () => gsap.set("#birdy", { opacity: 0 }),
-//   },
-//   "birdy"
-// );
-
-
 
 // Falling star
 mainTimeline.add("fstar", 9.6);
