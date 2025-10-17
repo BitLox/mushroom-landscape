@@ -41,6 +41,7 @@ gsap.set("#h2-6", { opacity: 0, y: 500 });
 gsap.set("#scene3", { y: height - 40, visibility: "visible" });
 gsap.set("#fstar", { y: -550 });
 gsap.set("#info", { y: -50 });
+gsap.set("#info1", { y: -50 });
 gsap.set("#cloudStart-R", { y: 10 });
 gsap.set("#cloudStart-L", { y: 0 });
 gsap.set("#bird", { opacity: 0, x: -800, scaleX: 1, rotation: 0 });
@@ -498,6 +499,7 @@ const colors = [
 ];
 const selectors = [
   "#info",
+  "#info1",
   "#scene2_text_a",
   "#scene2_text_b",
   "#scene2_text_c",
@@ -682,6 +684,7 @@ mainTimeline.to(
   "scene1"
 );
 mainTimeline.to("#info", { y: 8 * speed, duration: 1 }, "scene1");
+mainTimeline.to("#info1", { y: 8 * speed, duration: 1 }, "scene1");
 mainTimeline.set(
   ["#cloudStart-L", "#cloudStart-R"],
   { opacity: 0 },

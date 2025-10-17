@@ -105,6 +105,12 @@ a[xlink\:href] * {
   font-size: 24px;
   fill: #f30ca2;
 }
+.title-text1 {
+  font-family: "Mojita","Asimovian", sans-serif;
+  font-size: 48px;
+  fill: #5f6772;
+}
+
 #testing2 {
   z-index: 50;
 }
@@ -366,9 +372,43 @@ a[xlink\:href] * {
     font-size: 24px;
     fill: #5f6772;
   }
+  .title-text1 {
+    font-family: "Mojita","Asimovian", sans-serif;
+    font-size: 36px;
+    fill: #5f6772;
+  }
 }
 
 
 th {
   text-align: left;
+}
+
+/* Tooltip container */
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* Add dots under the hoverable text */
+  cursor: pointer;
+}
+
+/* Tooltip text */
+.tooltiptext {
+  visibility: hidden; /* Hidden by default */
+  width: 130px;
+  top: 100%;
+  left: 50%;
+  margin-left: -65px;
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  z-index: 1; /* Ensure tooltip is displayed above content */
+}
+
+/* Show the tooltip text on hover */
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
