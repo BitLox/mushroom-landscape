@@ -422,6 +422,26 @@ if (involvedLink) {
       }
     });
   }
+
+  const roadmapLink = document.getElementById("roadmap-link");
+  const popupRM = document.getElementById("roadmap-popup");
+  if (roadmapLink && popupRM) {
+    roadmapLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      popupRM.classList.add("active");
+      document.body.style.overflow = "hidden";
+    });
+    popupRM.addEventListener("click", () => {
+      popupRM.classList.remove("active");
+      document.body.style.overflow = "";
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && popupRM.classList.contains("active")) {
+        popupRM.classList.remove("active");
+        document.body.style.overflow = "";
+      }
+    });
+  }
   // Cloud drift animations (moved inside for timing, removed opacity to avoid override)
   const cloudDriftL = gsap.to("#cloudStart-L", {
     x: 100,
