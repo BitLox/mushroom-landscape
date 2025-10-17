@@ -367,3 +367,8 @@ a[xlink\:href] * {
     fill: #5f6772;
   }
 }
+
+
+th {
+  text-align: left;
+}
